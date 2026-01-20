@@ -88,23 +88,19 @@ Statické komponenty:
 </template>
 ```
 
-## Výhody
+## Poznámky
 
 - Oficiální design system české státní správy
 - Konzistentní vzhled napříč státními weby
 - Přístupnost (WCAG 2.1 AA) řešena v komponentách
 - Vue wrappery pro formuláře s v-model
 - SSR hydratace pro lepší initial load
-- Aktivně vyvíjeno a udržováno
-
-## Poznámky
-
 - Web Components fungují pouze na klientu (nutné `<ClientOnly>`)
 - SSR hydratace může selhat, fallback na client-side
 - Vyžaduje `unsafe-inline` v CSP (Stencil.js injektuje styly do Shadow DOM)
 - Customizace stylů omezena kvůli Shadow DOM
-- Slot syntax je HTML native (`slot="label"`), ne Vue (`v-slot`)
-- Textarea se řeší přes `<GovFormInput :multiline="true">`
+- Gov DS jsou Web Components (Stencil.js), ne Vue komponenty - sloty se definují HTML atributem `slot="label"`, ne Vue direktivou `v-slot`
+- Gov DS nemá samostatnou textarea komponentu - používá se `<GovFormInput :multiline="true" :rows="4" />`
 
 ## Spuštění
 
