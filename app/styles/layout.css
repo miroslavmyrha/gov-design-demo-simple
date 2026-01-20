@@ -1,0 +1,46 @@
+/**
+ * Layout Styles
+ * Main layout wrapper, skip link, and keyboard focus styles
+ */
+
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--background-page);
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--background-primary);
+  color: var(--text-white-fixed);
+  padding: 8px 16px;
+  z-index: 100;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Keyboard-only focus outlines */
+.layout-wrapper:not(.keyboard-user) *:focus {
+  outline: none;
+}
+
+.layout-wrapper.keyboard-user *:focus {
+  outline: 2px solid var(--interactive-active);
+  outline-offset: 2px;
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  padding: 2rem 0;
+  outline: none;
+  background: var(--background-page);
+}

@@ -1,0 +1,218 @@
+/**
+ * Header Styles
+ * App header, navigation, language switcher, theme toggle
+ */
+
+.app-header {
+  background: var(--background-white);
+  border-bottom: 1px solid var(--border-subtlest);
+  padding: 1rem 0;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* Logo */
+.header-logo {
+  flex-shrink: 0;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.logo-text {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+}
+
+/* Navigation */
+.header-nav {
+  flex: 1;
+}
+
+.header-nav--desktop {
+  display: block;
+}
+
+.header-nav--mobile {
+  display: none;
+}
+
+.nav-list {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.nav-list li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.nav-list li::before {
+  display: none !important;
+  content: none !important;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--text-primary-color);
+}
+
+.nav-link--active {
+  color: var(--text-primary-color);
+  border-bottom-color: var(--interactive-active);
+}
+
+/* Header actions */
+.header-actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Language switcher */
+.language-switcher {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  background: var(--background-white);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.language-switcher:hover {
+  border-color: var(--border-subtle-hover, var(--border-subtle));
+}
+
+.language-switcher:focus {
+  outline: 2px solid var(--interactive-active);
+  outline-offset: 2px;
+}
+
+/* Mobile menu toggle */
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: background-color 0.2s;
+}
+
+.mobile-menu-toggle:hover {
+  background: var(--background-neutral-subtlest);
+}
+
+/* Mobile theme toggle */
+.mobile-theme-toggle {
+  display: none;
+}
+
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  border: none;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--text-primary);
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .header-nav--desktop {
+    display: none;
+  }
+
+  .header-nav--mobile {
+    display: block;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border-subtlest);
+  }
+
+  .nav-list--mobile {
+    flex-direction: column;
+    gap: 0;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .nav-list--mobile li {
+    border-bottom: 1px solid var(--border-subtlest);
+    position: relative;
+  }
+
+  .nav-list--mobile li::before {
+    display: none !important;
+    content: none !important;
+  }
+
+  .nav-list--mobile li:last-child {
+    border-bottom: none;
+  }
+
+  .nav-list--mobile .nav-link {
+    display: block;
+    padding: 1rem 0;
+    border-bottom: none;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .nav-list--mobile .nav-link--active {
+    color: var(--text-primary-color);
+    font-weight: 600;
+  }
+
+  .mobile-theme-toggle {
+    display: block;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-subtlest);
+  }
+
+  .desktop-theme-toggle {
+    display: none !important;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

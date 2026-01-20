@@ -1,0 +1,8 @@
+/**
+ * Main Styles
+ * Entry point for all application styles
+ */
+
+@import './layout.css';
+@import './header.css';
+@import './footer.css';

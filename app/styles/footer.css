@@ -1,0 +1,66 @@
+/**
+ * Footer Styles
+ * App footer with links and copyright
+ */
+
+.app-footer {
+  background: var(--background-neutral-subtlest);
+  border-top: 1px solid var(--border-subtlest);
+  padding: 2rem 0;
+  margin-top: auto;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.footer-info {
+  color: var(--text-secondary);
+}
+
+.footer-copyright {
+  font-weight: 500;
+  margin: 0 0 0.25rem 0;
+  color: var(--text-primary);
+}
+
+.footer-description {
+  font-size: 0.875rem;
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.footer-links a:hover {
+  color: var(--text-primary-color);
+  text-decoration: underline;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

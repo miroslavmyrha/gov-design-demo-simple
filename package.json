@@ -1,0 +1,32 @@
+{
+  "name": "gov-design-demo-simple",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@gov-design-system-ce/components": "^4.2.9",
+    "@gov-design-system-ce/fonts": "^0.0.2",
+    "@gov-design-system-ce/icons": "^0.2.3",
+    "@gov-design-system-ce/styles": "^4.2.7",
+    "@gov-design-system-ce/vue": "^2.3.4",
+    "@nuxtjs/i18n": "^10.2.1",
+    "@pinia/nuxt": "^0.11.3",
+    "nuxt": "^4.2.2",
+    "pinia": "^3.0.2",
+    "vue": "^3.5.27",
+    "vue-router": "^4.6.4",
+    "zod": "^4.3.5"
+  },
+  "devDependencies": {
+    "@nuxt/image": "^1.10.0",
+    "schema-dts": "^1.1.5",
+    "vue-tsc": "^3.2.2"
+  }
+}
