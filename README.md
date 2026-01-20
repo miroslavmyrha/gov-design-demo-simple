@@ -2,6 +2,10 @@
 
 Demo integrace Gov Design System CE s Nuxt 4.
 
+![Screenshot - Úvodní stránka](docs/screenshot-home.png)
+
+![Screenshot - Formuláře](docs/screenshot-form.png)
+
 ## Napojení komponent
 
 ### 1. Instalace
