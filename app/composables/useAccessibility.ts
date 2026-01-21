@@ -10,21 +10,22 @@ const SR_ONLY_STYLES = `
   border: 0;
 `
 
+// Shared state across all components
+const isKeyboardUser = ref(false)
+let announceTimeoutId: ReturnType<typeof setTimeout> | null = null
+let listenersRegistered = false
+
+function handleKeyDown(e: KeyboardEvent): void {
+  if (e.key === 'Tab') {
+    isKeyboardUser.value = true
+  }
+}
+
+function handleMouseDown(): void {
+  isKeyboardUser.value = false
+}
+
 export function useAccessibility() {
-  const isKeyboardUser = ref(false)
-
-  let announceTimeoutId: ReturnType<typeof setTimeout> | null = null
-
-  function handleKeyDown(e: KeyboardEvent): void {
-    if (e.key === 'Tab') {
-      isKeyboardUser.value = true
-    }
-  }
-
-  function handleMouseDown(): void {
-    isKeyboardUser.value = false
-  }
-
   /**
    * Announces a message to screen readers via ARIA live region.
    * The live region is a singleton element that persists in the DOM
@@ -35,7 +36,6 @@ export function useAccessibility() {
   function announce(message: string, priority: 'polite' | 'assertive' = 'polite'): void {
     if (!import.meta.client) return
 
-    // Clear any pending announcement
     if (announceTimeoutId) {
       clearTimeout(announceTimeoutId)
       announceTimeoutId = null
@@ -73,22 +73,10 @@ export function useAccessibility() {
   }
 
   onMounted(() => {
-    if (import.meta.client) {
+    if (import.meta.client && !listenersRegistered) {
       document.addEventListener('keydown', handleKeyDown)
       document.addEventListener('mousedown', handleMouseDown)
-    }
-  })
-
-  onUnmounted(() => {
-    if (import.meta.client) {
-      document.removeEventListener('keydown', handleKeyDown)
-      document.removeEventListener('mousedown', handleMouseDown)
-
-      // Clear pending announcement timeout
-      if (announceTimeoutId) {
-        clearTimeout(announceTimeoutId)
-        announceTimeoutId = null
-      }
+      listenersRegistered = true
     }
   })
 

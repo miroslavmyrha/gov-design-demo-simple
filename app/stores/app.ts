@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
-import type { Theme, Locale, Notification } from '~/types/app'
+import type { Theme, Notification } from '~/types/app'
 
 const STORAGE_KEY_THEME = 'app-theme'
-const STORAGE_KEY_LOCALE = 'app-locale'
 const DEFAULT_NOTIFICATION_TIMEOUT = 5000
 const MAX_NOTIFICATIONS = 50
 const VALID_THEMES: Theme[] = ['light', 'dark', 'system']
@@ -10,7 +9,6 @@ const VALID_THEMES: Theme[] = ['light', 'dark', 'system']
 export const useAppStore = defineStore('app', () => {
   // State
   const theme = ref<Theme>('light')
-  const locale = ref<Locale>('cs')
   const notifications = ref<Notification[]>([])
   const isLoading = ref(false)
   const loadingMessage = ref('')
@@ -84,22 +82,6 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
-  function cleanupThemeListener(): void {
-    if (themeMediaQuery && themeChangeHandler) {
-      themeMediaQuery.removeEventListener('change', themeChangeHandler)
-      themeMediaQuery = null
-      themeChangeHandler = null
-    }
-  }
-
-  function setLocale(newLocale: Locale): void {
-    locale.value = newLocale
-    if (import.meta.client) {
-      localStorage.setItem(STORAGE_KEY_LOCALE, newLocale)
-      document.documentElement.setAttribute('lang', newLocale)
-    }
-  }
-
   function addNotification(notification: Omit<Notification, 'id'>): string {
     const id = generateNotificationId()
     const newNotification: Notification = { ...notification, id }
@@ -130,11 +112,6 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
-  function clearNotifications(): void {
-    notifications.value.forEach((n) => clearNotificationTimeout(n.id))
-    notifications.value = []
-  }
-
   function showSuccess(message: string, timeout?: number): string {
     return addNotification({ type: 'success', message, timeout })
   }
@@ -147,7 +124,6 @@ export const useAppStore = defineStore('app', () => {
   return {
     // State
     theme,
-    locale,
     notifications,
     isLoading,
     loadingMessage,
@@ -158,11 +134,8 @@ export const useAppStore = defineStore('app', () => {
     toggleTheme,
     applyTheme,
     initTheme,
-    cleanupThemeListener,
-    setLocale,
     addNotification,
     removeNotification,
-    clearNotifications,
     showSuccess,
     setLoading,
   }

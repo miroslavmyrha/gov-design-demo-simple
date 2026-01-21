@@ -21,8 +21,6 @@ interface PageSetupOptions {
  * - SEO meta tags (usePageSeo)
  * - Structured data (useStructuredData)
  * - Breadcrumbs
- *
- * 
  */
 export function usePageSetup(options: PageSetupOptions) {
   const { t } = useI18n()
