@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { GovMessage } from '@gov-design-system-ce/vue'
 import type { FieldError } from '~/types/forms'
 
 defineProps<{
@@ -8,14 +9,14 @@ defineProps<{
 </script>
 
 <template>
-  <gov-message v-if="errors.length > 0" color="error" class="form-error-summary">
+  <GovMessage v-if="errors.length > 0" color="error" class="form-error-summary">
     <strong>{{ title || $t('form.errorsTitle') }}</strong>
     <ul>
       <li v-for="error in errors" :key="error.field">
         <strong>{{ error.label }}:</strong> {{ error.message }}
       </li>
     </ul>
-  </gov-message>
+  </GovMessage>
 </template>
 
 <style scoped>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { GovBreadcrumbs, GovIcon } from '@gov-design-system-ce/vue'
+
 const { t } = useI18n()
 
 interface BreadcrumbItem {
@@ -15,14 +17,14 @@ const items: BreadcrumbItem[] = [
 
 <template>
   <DemoSection title-key="demo.breadcrumbs.title">
-    <gov-breadcrumbs :accessible-label="t('demo.breadcrumbs.accessibleLabel')">
+    <GovBreadcrumbs :accessible-label="t('demo.breadcrumbs.accessibleLabel')">
       <ul>
         <li v-for="(item, index) in items" :key="item.key">
-          <gov-icon v-if="index > 0" type="components" name="chevron-right" aria-hidden="true" />
+          <GovIcon v-if="index > 0" type="components" name="chevron-right" aria-hidden="true" />
           <strong v-if="!item.href">{{ $t(`demo.breadcrumbs.${item.key}`) }}</strong>
           <a v-else :href="item.href">{{ $t(`demo.breadcrumbs.${item.key}`) }}</a>
         </li>
       </ul>
-    </gov-breadcrumbs>
+    </GovBreadcrumbs>
   </DemoSection>
 </template>

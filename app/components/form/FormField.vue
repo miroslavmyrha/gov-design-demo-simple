@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { GovFormInput } from '@gov-design-system-ce/vue'
+import {
+  GovFormControl,
+  GovFormInput,
+  GovFormLabel,
+  GovFormMessage,
+} from '@gov-design-system-ce/vue'
 
 type InputType = 'text' | 'email' | 'password' | 'number' | 'search' | 'tel' | 'url' | 'date' | 'time' | 'datetime-local' | 'month' | 'week' | 'color'
 
@@ -31,10 +36,10 @@ function handleBlur() {
 </script>
 
 <template>
-  <gov-form-control :class="{ 'has-error': showError }">
-    <gov-form-label slot="top">
+  <GovFormControl :class="{ 'has-error': showError }">
+    <GovFormLabel slot="top">
       {{ label }}{{ required ? ' *' : '' }}
-    </gov-form-label>
+    </GovFormLabel>
     <GovFormInput
       :model-value="modelValue"
       :placeholder="placeholder"
@@ -46,12 +51,12 @@ function handleBlur() {
       @update:model-value="handleInput"
       @gov-blur="handleBlur"
     />
-    <gov-form-message
+    <GovFormMessage
       v-if="showError && error"
       slot="bottom"
       color="error"
     >
       {{ error }}
-    </gov-form-message>
-  </gov-form-control>
+    </GovFormMessage>
+  </GovFormControl>
 </template>

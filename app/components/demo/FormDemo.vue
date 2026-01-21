@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import {
-  GovFormSelect,
-  GovFormRadioGroup,
+  GovButton,
   GovFormCheckbox,
+  GovFormControl,
+  GovFormLabel,
+  GovFormMessage,
+  GovFormRadio,
+  GovFormRadioGroup,
+  GovFormSelect,
 } from '@gov-design-system-ce/vue'
 import { useFormValidation } from '~/composables/useFormValidation'
 import { createFormSchema, createFieldLabels, defaultFormData } from '~/schemas/form'
@@ -100,59 +105,59 @@ function resetForm(): void {
         @blur="markTouched(field.key)"
       />
 
-      <gov-form-control>
-        <gov-form-label slot="top">{{ $t('form.fields.option.label') }}</gov-form-label>
+      <GovFormControl>
+        <GovFormLabel slot="top">{{ $t('form.fields.option.label') }}</GovFormLabel>
         <GovFormSelect :key="'select-' + formKey" v-model="formData.option">
           <option value="">{{ $t('form.fields.option.placeholder') }}</option>
           <option v-for="opt in selectOptions" :key="opt.value" :value="opt.value">
             {{ $t(opt.labelKey) }}
           </option>
         </GovFormSelect>
-      </gov-form-control>
+      </GovFormControl>
 
-      <gov-form-control :class="{ 'has-error': shouldShowError('gender') }">
-        <gov-form-label slot="top">{{ $t('form.fields.gender.label') }} *</gov-form-label>
+      <GovFormControl :class="{ 'has-error': shouldShowError('gender') }">
+        <GovFormLabel slot="top">{{ $t('form.fields.gender.label') }} *</GovFormLabel>
         <GovFormRadioGroup
           :key="'radio-' + formKey"
           v-model="formData.gender"
           gap="m"
           @gov-change="markTouched('gender')"
         >
-          <gov-form-radio value="m">
-            <gov-form-label slot="label">{{ $t('form.fields.gender.male') }}</gov-form-label>
-          </gov-form-radio>
-          <gov-form-radio value="f">
-            <gov-form-label slot="label">{{ $t('form.fields.gender.female') }}</gov-form-label>
-          </gov-form-radio>
+          <GovFormRadio value="m">
+            <GovFormLabel slot="label">{{ $t('form.fields.gender.male') }}</GovFormLabel>
+          </GovFormRadio>
+          <GovFormRadio value="f">
+            <GovFormLabel slot="label">{{ $t('form.fields.gender.female') }}</GovFormLabel>
+          </GovFormRadio>
         </GovFormRadioGroup>
-        <gov-form-message
+        <GovFormMessage
           v-if="shouldShowError('gender')"
           slot="bottom"
           color="error"
         >
           {{ getError('gender') }}
-        </gov-form-message>
-      </gov-form-control>
+        </GovFormMessage>
+      </GovFormControl>
 
-      <gov-form-control :class="{ 'has-error': shouldShowError('agreeTerms') }">
+      <GovFormControl :class="{ 'has-error': shouldShowError('agreeTerms') }">
         <GovFormCheckbox
           :key="'checkbox-' + formKey"
           v-model="formData.agreeTerms"
           @gov-change="markTouched('agreeTerms')"
         >
-          <gov-form-label slot="label">{{ $t('form.fields.agreeTerms.label') }} *</gov-form-label>
+          <GovFormLabel slot="label">{{ $t('form.fields.agreeTerms.label') }} *</GovFormLabel>
         </GovFormCheckbox>
-        <gov-form-message
+        <GovFormMessage
           v-if="shouldShowError('agreeTerms')"
           slot="bottom"
           color="error"
         >
           {{ getError('agreeTerms') }}
-        </gov-form-message>
-      </gov-form-control>
+        </GovFormMessage>
+      </GovFormControl>
 
       <div class="demo-row">
-        <gov-button
+        <GovButton
           color="primary"
           size="m"
           type="solid"
@@ -160,8 +165,8 @@ function resetForm(): void {
           :disabled="!isFormValid"
         >
           {{ $t('common.submit') }}
-        </gov-button>
-        <gov-button
+        </GovButton>
+        <GovButton
           color="secondary"
           size="m"
           type="solid"
@@ -169,7 +174,7 @@ function resetForm(): void {
           @gov-click="resetForm"
         >
           {{ $t('common.reset') }}
-        </gov-button>
+        </GovButton>
       </div>
     </form>
   </DemoSection>

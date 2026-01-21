@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { GovButton } from '@gov-design-system-ce/vue'
+
 const variantButtons = [
   { color: 'primary', label: 'primary', disabled: false },
   { color: 'secondary', label: 'secondary', disabled: false },
@@ -15,7 +17,7 @@ const sizeButtons = [
 <template>
   <DemoSection title-key="demo.buttons.title">
     <div class="demo-row">
-      <gov-button
+      <GovButton
         v-for="btn in variantButtons"
         :key="btn.label"
         :color="btn.color"
@@ -24,10 +26,10 @@ const sizeButtons = [
         :disabled="btn.disabled"
       >
         {{ $t(`demo.buttons.${btn.label}`) }}
-      </gov-button>
+      </GovButton>
     </div>
     <div class="demo-row">
-      <gov-button
+      <GovButton
         v-for="btn in sizeButtons"
         :key="btn.size"
         color="primary"
@@ -35,7 +37,7 @@ const sizeButtons = [
         :size="btn.size"
       >
         {{ $t(`demo.buttons.${btn.label}`) }}
-      </gov-button>
+      </GovButton>
     </div>
   </DemoSection>
 </template>

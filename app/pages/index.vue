@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { GovButton, GovCard, GovIcon } from '@gov-design-system-ce/vue'
 import { FEATURE_CONFIGS } from '~/data/home'
 
 const { t } = usePageSetup({
@@ -29,12 +30,12 @@ const features = computed(() =>
       </p>
 
       <div class="hero-actions">
-        <gov-button color="primary" type="solid" size="l" :href="localePath('/komponenty')">
+        <GovButton color="primary" type="solid" size="l" :href="localePath('/komponenty')">
           {{ $t('home.viewComponents') }}
-        </gov-button>
-        <gov-button color="secondary" type="outlined" size="l" :href="localePath('/o-projektu')">
+        </GovButton>
+        <GovButton color="secondary" type="outlined" size="l" :href="localePath('/o-projektu')">
           {{ $t('home.aboutProject') }}
-        </gov-button>
+        </GovButton>
       </div>
     </section>
 
@@ -48,15 +49,15 @@ const features = computed(() =>
           :to="feature.link"
           class="feature-card"
         >
-          <gov-card>
+          <GovCard>
             <div class="feature-content">
               <div class="feature-icon">
-                <gov-icon :name="feature.icon" />
+                <GovIcon :name="feature.icon" />
               </div>
               <h3 class="feature-title">{{ feature.title }}</h3>
               <p class="feature-description">{{ feature.description }}</p>
             </div>
-          </gov-card>
+          </GovCard>
         </NuxtLink>
       </div>
     </section>
@@ -69,9 +70,9 @@ const features = computed(() =>
         <LazyDemoMessagesDemo />
 
         <div class="more-link">
-          <gov-button type="link" :href="localePath('/komponenty')">
+          <GovButton type="link" :href="localePath('/komponenty')">
             {{ $t('home.viewAllComponents') }}
-          </gov-button>
+          </GovButton>
         </div>
 
         <template #error="{ error, clearError }">

@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import {
+  GovAccordion,
+  GovAccordionItem,
+  GovButton,
+  GovCard,
+  GovChip,
+  GovIcon,
+} from '@gov-design-system-ce/vue'
 import { TECH_STACK, FEATURES, PROJECT_STRUCTURE, EXTERNAL_LINKS } from '~/data/about'
 
 usePageSetup({
@@ -20,13 +28,13 @@ usePageSetup({
     <!-- Tech Stack -->
     <DemoSection title-key="about.techStackTitle">
       <div class="grid-base grid-auto-200">
-        <gov-card v-for="tech in TECH_STACK" :key="tech.name" class="tech-card">
+        <GovCard v-for="tech in TECH_STACK" :key="tech.name" class="tech-card">
           <div class="tech-content">
             <h3 class="tech-name">{{ tech.name }}</h3>
-            <gov-chip size="s" color="primary">{{ tech.version }}</gov-chip>
+            <GovChip size="s" color="primary">{{ tech.version }}</GovChip>
             <p class="tech-description">{{ $t(`about.techStack.${tech.descriptionKey}.description`) }}</p>
           </div>
-        </gov-card>
+        </GovCard>
       </div>
     </DemoSection>
 
@@ -35,7 +43,7 @@ usePageSetup({
       <div class="grid-base grid-auto-280 grid-gap-lg">
         <div v-for="feature in FEATURES" :key="feature.titleKey" class="feature-item">
           <div class="feature-icon">
-            <gov-icon :name="feature.icon" />
+            <GovIcon :name="feature.icon" />
           </div>
           <div class="feature-content">
             <h3 class="feature-title">{{ $t(`about.features.${feature.titleKey}.title`) }}</h3>
@@ -47,8 +55,8 @@ usePageSetup({
 
     <!-- Project Structure -->
     <DemoSection title-key="about.projectStructureTitle">
-      <gov-accordion>
-        <gov-accordion-item
+      <GovAccordion>
+        <GovAccordionItem
           v-for="section in PROJECT_STRUCTURE"
           :key="section.key"
           :is-expanded="section.isExpanded"
@@ -61,14 +69,14 @@ usePageSetup({
               {{ $t(`about.projectStructure.${section.key}.items.${item}`) }}
             </li>
           </ul>
-        </gov-accordion-item>
-      </gov-accordion>
+        </GovAccordionItem>
+      </GovAccordion>
     </DemoSection>
 
     <!-- External Links -->
     <DemoSection title-key="about.linksTitle">
       <div class="flex-wrap-gap">
-        <gov-button
+        <GovButton
           v-for="link in EXTERNAL_LINKS"
           :key="link.href"
           type="outlined"
@@ -76,7 +84,7 @@ usePageSetup({
           target="_blank"
         >
           {{ link.label }}
-        </gov-button>
+        </GovButton>
       </div>
     </DemoSection>
   </div>

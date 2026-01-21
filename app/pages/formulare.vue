@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { GovAccordion, GovAccordionItem } from '@gov-design-system-ce/vue'
 import { FIELD_RULE_KEYS, VALIDATION_FIELDS } from '~/data/forms'
 
 const { t } = usePageSetup({
@@ -32,16 +33,16 @@ const { t } = usePageSetup({
     <DemoSection title-key="forms.validationRulesTitle">
       <p>{{ $t('forms.validationRulesDescription') }}</p>
 
-      <gov-accordion>
-        <gov-accordion-item v-for="fieldId in VALIDATION_FIELDS" :key="fieldId">
+      <GovAccordion>
+        <GovAccordionItem v-for="fieldId in VALIDATION_FIELDS" :key="fieldId">
           <h3 slot="label">{{ t(`forms.validationRules.${fieldId}.label`) }}</h3>
           <ul>
             <li v-for="ruleKey in FIELD_RULE_KEYS[fieldId]" :key="ruleKey">
               {{ t(`forms.validationRules.${fieldId}.${ruleKey}`) }}
             </li>
           </ul>
-        </gov-accordion-item>
-      </gov-accordion>
+        </GovAccordionItem>
+      </GovAccordion>
     </DemoSection>
   </div>
 </template>

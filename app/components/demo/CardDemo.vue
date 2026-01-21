@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { GovButton, GovCard, GovIcon } from '@gov-design-system-ce/vue'
+
 interface CardConfig {
   key: string
   icon?: string
@@ -16,18 +18,18 @@ const cards: CardConfig[] = [
 <template>
   <DemoSection title-key="demo.card.title">
     <div class="grid-base grid-auto-250">
-      <gov-card v-for="card in cards" :key="card.key" :promotion="card.promotion ?? false">
+      <GovCard v-for="card in cards" :key="card.key" :promotion="card.promotion ?? false">
         <div class="card-content">
           <div v-if="card.icon" class="card-icon">
-            <gov-icon :name="card.icon" />
+            <GovIcon :name="card.icon" />
           </div>
           <h3 class="gov-text--l">{{ $t(`demo.card.${card.key}.title`) }}</h3>
           <p>{{ $t(`demo.card.${card.key}.content`) }}</p>
-          <gov-button v-if="card.hasButton" color="primary" type="solid" size="s">
+          <GovButton v-if="card.hasButton" color="primary" type="solid" size="s">
             {{ $t('demo.card.actionButton') }}
-          </gov-button>
+          </GovButton>
         </div>
-      </gov-card>
+      </GovCard>
     </div>
   </DemoSection>
 </template>

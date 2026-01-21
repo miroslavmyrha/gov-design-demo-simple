@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { GovMessage } from '@gov-design-system-ce/vue'
 import { getMessageColor } from '~/utils/colors'
 
 const appStore = useAppStore()
@@ -8,14 +9,14 @@ const appStore = useAppStore()
   <Teleport to="body">
     <div class="notifications-container">
       <TransitionGroup name="notification">
-        <gov-message
+        <GovMessage
           v-for="notification in appStore.notifications"
           :key="notification.id"
           :color="getMessageColor(notification.type)"
           class="notification-item"
         >
           {{ notification.message }}
-        </gov-message>
+        </GovMessage>
       </TransitionGroup>
     </div>
   </Teleport>

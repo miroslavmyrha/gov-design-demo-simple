@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { GovLoading } from '@gov-design-system-ce/vue'
+
 const appStore = useAppStore()
 const { t } = useI18n()
 </script>
@@ -6,7 +8,7 @@ const { t } = useI18n()
 <template>
   <Teleport to="body">
     <div v-if="appStore.isLoading" class="global-loading">
-      <gov-loading :label="appStore.loadingMessage || t('common.loading')" />
+      <GovLoading :label="appStore.loadingMessage || t('common.loading')" />
     </div>
   </Teleport>
 </template>

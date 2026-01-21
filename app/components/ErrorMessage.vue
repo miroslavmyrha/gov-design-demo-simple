@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { GovButton, GovMessage } from '@gov-design-system-ce/vue'
+
 defineProps<{
   title?: string
   error: Error
@@ -7,16 +9,16 @@ defineProps<{
 </script>
 
 <template>
-  <gov-message color="error">
+  <GovMessage color="error">
     <strong>{{ title || $t('common.error') }}</strong>
     <p>{{ error.message }}</p>
-    <gov-button
+    <GovButton
       color="primary"
       type="solid"
       size="s"
       @gov-click="clearError"
     >
       {{ $t('common.tryAgain') }}
-    </gov-button>
-  </gov-message>
+    </GovButton>
+  </GovMessage>
 </template>

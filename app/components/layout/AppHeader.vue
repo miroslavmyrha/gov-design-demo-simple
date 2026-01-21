@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { GovButton, GovIcon } from '@gov-design-system-ce/vue'
+
 const appStore = useAppStore()
 const { t, locale, locales } = useI18n()
 const localePath = useLocalePath()
@@ -87,15 +89,15 @@ watch(() => currentRoute.path, () => {
             </option>
           </select>
 
-          <gov-button
+          <GovButton
             class="desktop-theme-toggle"
             type="outlined"
             size="s"
             :wcag-label="appStore.effectiveTheme === 'light' ? $t('theme.switchToDark') : $t('theme.switchToLight')"
             @gov-click="appStore.toggleTheme()"
           >
-            <gov-icon :name="appStore.effectiveTheme === 'light' ? 'moon' : 'sun'" />
-          </gov-button>
+            <GovIcon :name="appStore.effectiveTheme === 'light' ? 'moon' : 'sun'" />
+          </GovButton>
 
           <button
             class="mobile-menu-toggle"
@@ -135,7 +137,7 @@ watch(() => currentRoute.path, () => {
 
         <div class="mobile-theme-toggle">
           <button class="theme-toggle-btn" @click="appStore.toggleTheme()">
-            <gov-icon :name="appStore.effectiveTheme === 'light' ? 'sun' : 'moon'" />
+            <GovIcon :name="appStore.effectiveTheme === 'light' ? 'sun' : 'moon'" />
             <span>{{ appStore.effectiveTheme === 'light' ? $t('theme.light') : $t('theme.dark') }}</span>
           </button>
         </div>
