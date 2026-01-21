@@ -148,6 +148,7 @@ export default {
           pages: 'Stránky aplikace (file-based routing)',
           components: 'Vue komponenty (demo, form, layout, ui)',
           composables: 'Znovupoužitelné composition functions',
+          data: 'Statická konfigurační data',
           layouts: 'Layout komponenty',
           plugins: 'Vue pluginy (Gov DS, theme)',
           schemas: 'Zod validační schémata',

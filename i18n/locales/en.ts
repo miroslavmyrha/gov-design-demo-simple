@@ -148,6 +148,7 @@ export default {
           pages: 'Application pages (file-based routing)',
           components: 'Vue components (demo, form, layout, ui)',
           composables: 'Reusable composition functions',
+          data: 'Static configuration data',
           layouts: 'Layout components',
           plugins: 'Vue plugins (Gov DS, theme)',
           schemas: 'Zod validation schemas',

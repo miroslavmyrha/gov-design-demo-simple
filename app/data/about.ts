@@ -20,7 +20,7 @@ export const PROJECT_STRUCTURE: ProjectStructureSection[] = [
   {
     key: 'app',
     isExpanded: true,
-    items: ['pages', 'components', 'composables', 'layouts', 'plugins', 'schemas', 'stores', 'styles', 'types', 'utils'],
+    items: ['pages', 'components', 'composables', 'data', 'layouts', 'plugins', 'schemas', 'stores', 'styles', 'types', 'utils'],
   },
   { key: 'public', items: ['icons', 'favicon'] },
 ]
