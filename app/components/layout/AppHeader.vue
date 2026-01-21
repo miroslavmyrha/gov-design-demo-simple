@@ -8,18 +8,12 @@ const switchLocalePath = useSwitchLocalePath()
 
 const mobileMenuOpen = ref(false)
 
-const emit = defineEmits<{
-  'menu-toggle': [open: boolean]
-}>()
-
 function toggleMobileMenu() {
   mobileMenuOpen.value = !mobileMenuOpen.value
-  emit('menu-toggle', mobileMenuOpen.value)
 }
 
 function closeMobileMenu() {
   mobileMenuOpen.value = false
-  emit('menu-toggle', false)
 }
 
 const navItems = computed(() => [

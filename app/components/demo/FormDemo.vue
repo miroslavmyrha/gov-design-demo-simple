@@ -87,10 +87,10 @@ function resetForm(): void {
   <DemoSection title-key="form.title">
     <FormErrorSummary v-if="submitted" :errors="errorSummary" />
 
-    <form @submit.prevent="handleSubmit">
+    <form :key="formKey" @submit.prevent="handleSubmit">
       <FormField
         v-for="field in textFields"
-        :key="field.key + '-' + formKey"
+        :key="field.key"
         :model-value="String(formData[field.key] ?? '')"
         :label="$t(`form.fields.${field.key}.label`)"
         :placeholder="$t(`form.fields.${field.key}.placeholder`)"
@@ -107,7 +107,7 @@ function resetForm(): void {
 
       <GovFormControl>
         <GovFormLabel slot="top">{{ $t('form.fields.option.label') }}</GovFormLabel>
-        <GovFormSelect :key="'select-' + formKey" v-model="formData.option">
+        <GovFormSelect v-model="formData.option">
           <option value="">{{ $t('form.fields.option.placeholder') }}</option>
           <option v-for="opt in selectOptions" :key="opt.value" :value="opt.value">
             {{ $t(opt.labelKey) }}
@@ -118,7 +118,6 @@ function resetForm(): void {
       <GovFormControl :class="{ 'has-error': shouldShowError('gender') }">
         <GovFormLabel slot="top">{{ $t('form.fields.gender.label') }} *</GovFormLabel>
         <GovFormRadioGroup
-          :key="'radio-' + formKey"
           v-model="formData.gender"
           gap="m"
           @gov-change="markTouched('gender')"
@@ -141,7 +140,6 @@ function resetForm(): void {
 
       <GovFormControl :class="{ 'has-error': shouldShowError('agreeTerms') }">
         <GovFormCheckbox
-          :key="'checkbox-' + formKey"
           v-model="formData.agreeTerms"
           @gov-change="markTouched('agreeTerms')"
         >

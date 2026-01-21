@@ -1,4 +1,3 @@
-import { defineNuxtPlugin } from '#app'
 import { ComponentLibrary } from '@gov-design-system-ce/vue/dist/plugin'
 
 declare global {

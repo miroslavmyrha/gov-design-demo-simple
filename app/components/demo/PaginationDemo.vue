@@ -4,6 +4,6 @@ import { GovPagination } from '@gov-design-system-ce/vue'
 
 <template>
   <DemoSection title-key="demo.pagination.title">
-    <GovPagination current="3" total="10" page-size="10" />
+    <GovPagination :current="3" :total="10" :page-size="10" />
   </DemoSection>
 </template>

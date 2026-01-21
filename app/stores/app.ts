@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Theme, Locale, Notification, AppState } from '~/types/app'
+import type { Theme, Locale, Notification } from '~/types/app'
 
 const STORAGE_KEY_THEME = 'app-theme'
 const STORAGE_KEY_LOCALE = 'app-locale'
@@ -7,142 +7,163 @@ const DEFAULT_NOTIFICATION_TIMEOUT = 5000
 const MAX_NOTIFICATIONS = 50
 const VALID_THEMES: Theme[] = ['light', 'dark', 'system']
 
-let themeMediaQuery: MediaQueryList | null = null
-let themeChangeHandler: ((e: MediaQueryListEvent) => void) | null = null
+export const useAppStore = defineStore('app', () => {
+  // State
+  const theme = ref<Theme>('light')
+  const locale = ref<Locale>('cs')
+  const notifications = ref<Notification[]>([])
+  const isLoading = ref(false)
+  const loadingMessage = ref('')
 
-const notificationTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
+  // Private state (not exposed)
+  let themeMediaQuery: MediaQueryList | null = null
+  let themeChangeHandler: ((e: MediaQueryListEvent) => void) | null = null
+  const notificationTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
 
-function generateNotificationId(): string {
-  return `notification-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
-}
+  // Getters
+  const effectiveTheme = computed<'light' | 'dark'>(() => {
+    if (theme.value === 'system') {
+      if (import.meta.client) {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      }
+      return 'light'
+    }
+    return theme.value
+  })
 
-function clearNotificationTimeout(id: string): void {
-  const timeoutId = notificationTimeouts.get(id)
-  if (timeoutId) {
-    clearTimeout(timeoutId)
-    notificationTimeouts.delete(id)
+  // Private functions
+  function generateNotificationId(): string {
+    return `notification-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
   }
-}
 
-export const useAppStore = defineStore('app', {
-  state: (): AppState => ({
-    theme: 'light',
-    locale: 'cs',
-    notifications: [],
-    isLoading: false,
-    loadingMessage: '',
-  }),
+  function clearNotificationTimeout(id: string): void {
+    const timeoutId = notificationTimeouts.get(id)
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+      notificationTimeouts.delete(id)
+    }
+  }
 
-  getters: {
-    effectiveTheme(): 'light' | 'dark' {
-      if (this.theme === 'system') {
-        if (import.meta.client) {
-          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-        }
-        return 'light'
+  // Actions
+  function applyTheme(): void {
+    if (import.meta.client) {
+      document.documentElement.setAttribute('data-theme', effectiveTheme.value)
+    }
+  }
+
+  function setTheme(newTheme: Theme): void {
+    theme.value = newTheme
+    if (import.meta.client) {
+      localStorage.setItem(STORAGE_KEY_THEME, newTheme)
+      applyTheme()
+    }
+  }
+
+  function toggleTheme(): void {
+    const newTheme = effectiveTheme.value === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+  }
+
+  function initTheme(): void {
+    if (import.meta.client) {
+      const savedTheme = localStorage.getItem(STORAGE_KEY_THEME) as Theme | null
+      if (savedTheme && VALID_THEMES.includes(savedTheme)) {
+        theme.value = savedTheme
       }
-      return this.theme
-    },
-  },
+      applyTheme()
 
-  actions: {
-    setTheme(theme: Theme): void {
-      this.theme = theme
-      if (import.meta.client) {
-        localStorage.setItem(STORAGE_KEY_THEME, theme)
-        this.applyTheme()
-      }
-    },
-
-    toggleTheme(): void {
-      const newTheme = this.effectiveTheme === 'light' ? 'dark' : 'light'
-      this.setTheme(newTheme)
-    },
-
-    applyTheme(): void {
-      if (import.meta.client) {
-        document.documentElement.setAttribute('data-theme', this.effectiveTheme)
-      }
-    },
-
-    initTheme(): void {
-      if (import.meta.client) {
-        const savedTheme = localStorage.getItem(STORAGE_KEY_THEME) as Theme | null
-        if (savedTheme && VALID_THEMES.includes(savedTheme)) {
-          this.theme = savedTheme
-        }
-        this.applyTheme()
-
-        if (!themeMediaQuery) {
-          themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-          themeChangeHandler = () => {
-            if (this.theme === 'system') {
-              this.applyTheme()
-            }
+      if (!themeMediaQuery) {
+        themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+        themeChangeHandler = () => {
+          if (theme.value === 'system') {
+            applyTheme()
           }
-          themeMediaQuery.addEventListener('change', themeChangeHandler)
         }
+        themeMediaQuery.addEventListener('change', themeChangeHandler)
       }
-    },
+    }
+  }
 
-    cleanupThemeListener(): void {
-      if (themeMediaQuery && themeChangeHandler) {
-        themeMediaQuery.removeEventListener('change', themeChangeHandler)
-        themeMediaQuery = null
-        themeChangeHandler = null
+  function cleanupThemeListener(): void {
+    if (themeMediaQuery && themeChangeHandler) {
+      themeMediaQuery.removeEventListener('change', themeChangeHandler)
+      themeMediaQuery = null
+      themeChangeHandler = null
+    }
+  }
+
+  function setLocale(newLocale: Locale): void {
+    locale.value = newLocale
+    if (import.meta.client) {
+      localStorage.setItem(STORAGE_KEY_LOCALE, newLocale)
+      document.documentElement.setAttribute('lang', newLocale)
+    }
+  }
+
+  function addNotification(notification: Omit<Notification, 'id'>): string {
+    const id = generateNotificationId()
+    const newNotification: Notification = { ...notification, id }
+
+    notifications.value.push(newNotification)
+
+    while (notifications.value.length > MAX_NOTIFICATIONS) {
+      const removed = notifications.value.shift()
+      if (removed) {
+        clearNotificationTimeout(removed.id)
       }
-    },
+    }
 
-    setLocale(locale: Locale): void {
-      this.locale = locale
-      if (import.meta.client) {
-        localStorage.setItem(STORAGE_KEY_LOCALE, locale)
-        document.documentElement.setAttribute('lang', locale)
-      }
-    },
+    if (notification.timeout !== 0) {
+      const timeout = notification.timeout ?? DEFAULT_NOTIFICATION_TIMEOUT
+      const timeoutId = setTimeout(() => removeNotification(id), timeout)
+      notificationTimeouts.set(id, timeoutId)
+    }
 
-    addNotification(notification: Omit<Notification, 'id'>): string {
-      const id = generateNotificationId()
-      const newNotification: Notification = { ...notification, id }
+    return id
+  }
 
-      this.notifications.push(newNotification)
+  function removeNotification(id: string): void {
+    clearNotificationTimeout(id)
+    const index = notifications.value.findIndex((n) => n.id === id)
+    if (index > -1) {
+      notifications.value.splice(index, 1)
+    }
+  }
 
-      while (this.notifications.length > MAX_NOTIFICATIONS) {
-        const removed = this.notifications.shift()
-        if (removed) {
-          clearNotificationTimeout(removed.id)
-        }
-      }
+  function clearNotifications(): void {
+    notifications.value.forEach((n) => clearNotificationTimeout(n.id))
+    notifications.value = []
+  }
 
-      if (notification.timeout !== 0) {
-        const timeout = notification.timeout ?? DEFAULT_NOTIFICATION_TIMEOUT
-        const timeoutId = setTimeout(() => this.removeNotification(id), timeout)
-        notificationTimeouts.set(id, timeoutId)
-      }
+  function showSuccess(message: string, timeout?: number): string {
+    return addNotification({ type: 'success', message, timeout })
+  }
 
-      return id
-    },
+  function setLoading(loading: boolean, message = ''): void {
+    isLoading.value = loading
+    loadingMessage.value = message
+  }
 
-    removeNotification(id: string): void {
-      clearNotificationTimeout(id)
-      const index = this.notifications.findIndex((n) => n.id === id)
-      if (index > -1) {
-        this.notifications.splice(index, 1)
-      }
-    },
-
-    clearNotifications(): void {
-      this.notifications.forEach((n) => clearNotificationTimeout(n.id))
-      this.notifications = []
-    },
-
-    showSuccess(message: string, timeout?: number): string {
-      return this.addNotification({ type: 'success', message, timeout })
-    },
-
-    setLoading(isLoading: boolean, message = ''): void {
-      this.isLoading = isLoading
-      this.loadingMessage = message
-    },
-  },
+  return {
+    // State
+    theme,
+    locale,
+    notifications,
+    isLoading,
+    loadingMessage,
+    // Getters
+    effectiveTheme,
+    // Actions
+    setTheme,
+    toggleTheme,
+    applyTheme,
+    initTheme,
+    cleanupThemeListener,
+    setLocale,
+    addNotification,
+    removeNotification,
+    clearNotifications,
+    showSuccess,
+    setLoading,
+  }
 })

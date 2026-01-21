@@ -8,11 +8,3 @@ export interface Notification {
   message: string
   timeout?: number
 }
-
-export interface AppState {
-  theme: Theme
-  locale: Locale
-  notifications: Notification[]
-  isLoading: boolean
-  loadingMessage: string
-}

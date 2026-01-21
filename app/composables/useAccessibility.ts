@@ -1,5 +1,3 @@
-import { ref, readonly, onMounted, onUnmounted } from 'vue'
-
 const SR_ONLY_STYLES = `
   position: absolute;
   width: 1px;
