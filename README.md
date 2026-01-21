@@ -41,14 +41,14 @@ export default defineNuxtConfig({
 
 ```typescript
 // app/plugins/design-system.client.ts
-import { defineGovDesignSystem } from '@gov-design-system-ce/components/dist/custom-elements'
+import { ComponentLibrary } from '@gov-design-system-ce/vue/dist/plugin'
 
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin(({ vueApp }) => {
   window.GOV_DS_CONFIG = {
     iconsPath: '/icons',
     iconsLazyLoad: true,
   }
-  defineGovDesignSystem()
+  vueApp.use(ComponentLibrary)
 })
 ```
 
@@ -60,9 +60,13 @@ import { renderToString } from '@gov-design-system-ce/components/dist/hydrate'
 
 export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hook('render:response', async (response) => {
-    if (response.body && typeof response.body === 'string') {
+    if (!response.body || typeof response.body !== 'string') return
+
+    try {
       const result = await renderToString(response.body)
       response.body = result.html
+    } catch (error) {
+      // Fallback na client-side hydrataci
     }
   })
 })
