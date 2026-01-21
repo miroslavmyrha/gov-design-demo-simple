@@ -110,7 +110,6 @@ import { GovFormControl, GovFormLabel, GovFormInput } from '@gov-design-system-c
 - Přístupnost (WCAG 2.1 AA) řešena v komponentách
 - Formulářové komponenty podporují `v-model`
 - Textarea: `<GovFormInput :multiline="true" :rows="4" />`
-- Sloty: HTML atribut `slot="top"`, ne Vue `v-slot`
 - CSP: vyžaduje `unsafe-inline` (Stencil.js)
 
 ## Spuštění
