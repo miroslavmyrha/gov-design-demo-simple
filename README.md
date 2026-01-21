@@ -74,23 +74,33 @@ export default defineNitroPlugin((nitroApp) => {
 
 ### 5. Použití komponent
 
-Formulářové komponenty s v-model:
+Všechny komponenty se importují z `@gov-design-system-ce/vue` a používají PascalCase:
+
 ```vue
 <script setup>
-import { GovFormInput, GovFormCheckbox } from '@gov-design-system-ce/vue'
+import { GovButton, GovFormInput, GovMessage } from '@gov-design-system-ce/vue'
+
 const name = ref('')
 </script>
 
 <template>
   <GovFormInput v-model="name" placeholder="Jméno" />
+  <GovButton color="primary">Odeslat</GovButton>
+  <GovMessage color="success">Úspěch</GovMessage>
 </template>
 ```
 
-Statické komponenty (se SSR hydratací není potřeba ClientOnly):
+Sloty se definují HTML atributem `slot=`, ne Vue direktivou `v-slot`:
 ```vue
+<script setup>
+import { GovFormControl, GovFormLabel, GovFormInput } from '@gov-design-system-ce/vue'
+</script>
+
 <template>
-  <gov-button color="primary">Tlačítko</gov-button>
-  <gov-message color="success">Úspěch</gov-message>
+  <GovFormControl>
+    <GovFormLabel slot="top">Jméno</GovFormLabel>
+    <GovFormInput v-model="name" />
+  </GovFormControl>
 </template>
 ```
 
@@ -99,12 +109,10 @@ Statické komponenty (se SSR hydratací není potřeba ClientOnly):
 - Oficiální design system české státní správy
 - Konzistentní vzhled napříč státními weby
 - Přístupnost (WCAG 2.1 AA) řešena v komponentách
-- Vue wrappery pro formuláře s v-model
+- Vue wrappery s podporou v-model pro formulářové komponenty
 - SSR hydratace renderuje Web Components na serveru (není potřeba `<ClientOnly>`)
-- Bez SSR hydratace by Web Components fungovaly pouze na klientu
+- Pod kapotou jsou to Web Components (Stencil.js) - sloty se definují HTML atributem `slot="label"`, ne Vue direktivou `v-slot`
 - Vyžaduje `unsafe-inline` v CSP (Stencil.js injektuje styly do Shadow DOM)
-- Customizace stylů omezena kvůli Shadow DOM
-- Gov DS jsou Web Components (Stencil.js), ne Vue komponenty - sloty se definují HTML atributem `slot="label"`, ne Vue direktivou `v-slot`
 - Gov DS nemá samostatnou textarea komponentu - používá se `<GovFormInput :multiline="true" :rows="4" />`
 
 ## Spuštění
