@@ -82,13 +82,11 @@ const name = ref('')
 </template>
 ```
 
-Statické komponenty:
+Statické komponenty (se SSR hydratací není potřeba ClientOnly):
 ```vue
 <template>
-  <ClientOnly>
-    <gov-button color="primary">Tlačítko</gov-button>
-    <gov-message color="success">Úspěch</gov-message>
-  </ClientOnly>
+  <gov-button color="primary">Tlačítko</gov-button>
+  <gov-message color="success">Úspěch</gov-message>
 </template>
 ```
 
@@ -98,9 +96,8 @@ Statické komponenty:
 - Konzistentní vzhled napříč státními weby
 - Přístupnost (WCAG 2.1 AA) řešena v komponentách
 - Vue wrappery pro formuláře s v-model
-- SSR hydratace pro lepší initial load
-- Web Components fungují pouze na klientu (nutné `<ClientOnly>`)
-- SSR hydratace může selhat, fallback na client-side
+- SSR hydratace renderuje Web Components na serveru (není potřeba `<ClientOnly>`)
+- Bez SSR hydratace by Web Components fungovaly pouze na klientu
 - Vyžaduje `unsafe-inline` v CSP (Stencil.js injektuje styly do Shadow DOM)
 - Customizace stylů omezena kvůli Shadow DOM
 - Gov DS jsou Web Components (Stencil.js), ne Vue komponenty - sloty se definují HTML atributem `slot="label"`, ne Vue direktivou `v-slot`
