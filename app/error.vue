@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app'
+import { GovButton } from '@gov-design-system-ce/vue'
 
 const VALID_ERROR_CODES = [400, 401, 403, 404, 500] as const
 type ErrorCode = (typeof VALID_ERROR_CODES)[number]
@@ -37,9 +38,9 @@ function handleError() {
       </p>
 
       <div class="error-actions">
-        <button class="error-button" @click="handleError">
+        <GovButton color="primary" type="solid" @gov-click="handleError">
           {{ $t('error.backToHome') }}
-        </button>
+        </GovButton>
       </div>
     </div>
   </div>
@@ -94,27 +95,5 @@ function handleError() {
 .error-actions {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-}
-
-.error-button {
-  background: var(--background-primary, #2362a2);
-  color: var(--text-white-fixed, #fff);
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.error-button:hover {
-  background: var(--background-primary-hover, #1a4d7c);
-}
-
-.error-button:focus {
-  outline: 2px solid var(--border-focus, #2362a2);
-  outline-offset: 2px;
 }
 </style>
