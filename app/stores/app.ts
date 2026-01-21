@@ -5,7 +5,7 @@ const STORAGE_KEY_THEME = 'app-theme'
 const DEFAULT_NOTIFICATION_TIMEOUT = 5000
 const MAX_NOTIFICATIONS = 50
 const VALID_THEMES: Theme[] = ['light', 'dark', 'system']
-const DARK_MODE_QUERY = DARK_MODE_QUERY
+const DARK_MODE_QUERY = '(prefers-color-scheme: dark)'
 
 export const useAppStore = defineStore('app', () => {
   // State
