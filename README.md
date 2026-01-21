@@ -37,8 +37,9 @@ export default defineNuxtConfig({
 })
 ```
 
-### 3. Client plugin
+### 3. Pluginy
 
+Client plugin - registrace komponent:
 ```typescript
 // app/plugins/design-system.client.ts
 import { ComponentLibrary } from '@gov-design-system-ce/vue/dist/plugin'
@@ -52,8 +53,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
 })
 ```
 
-### 4. SSR hydratace (volitelné)
-
+Server plugin - SSR hydratace:
 ```typescript
 // server/plugins/design-system.ts
 import { renderToString } from '@gov-design-system-ce/components/dist/hydrate'
@@ -66,13 +66,13 @@ export default defineNitroPlugin((nitroApp) => {
       const result = await renderToString(response.body)
       response.body = result.html
     } catch (error) {
-      // Fallback na client-side hydrataci
+      // Fallback na client-side rendering
     }
   })
 })
 ```
 
-### 5. Použití komponent
+### 4. Použití komponent
 
 Všechny komponenty se importují z `@gov-design-system-ce/vue` a používají PascalCase:
 
