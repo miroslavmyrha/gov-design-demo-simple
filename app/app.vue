@@ -14,7 +14,6 @@ useHead(() => ({
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-    <UiGlobalLoading />
     <UiGlobalNotifications />
   </div>
 </template>

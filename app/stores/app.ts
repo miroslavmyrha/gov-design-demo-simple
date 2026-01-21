@@ -10,8 +10,7 @@ export const useAppStore = defineStore('app', () => {
   // State
   const theme = ref<Theme>('light')
   const notifications = ref<Notification[]>([])
-  const isLoading = ref(false)
-  const loadingMessage = ref('')
+
 
   // Private state (not exposed)
   let themeMediaQuery: MediaQueryList | null = null
@@ -116,27 +115,17 @@ export const useAppStore = defineStore('app', () => {
     return addNotification({ type: 'success', message, timeout })
   }
 
-  function setLoading(loading: boolean, message = ''): void {
-    isLoading.value = loading
-    loadingMessage.value = message
-  }
-
   return {
     // State
     theme,
     notifications,
-    isLoading,
-    loadingMessage,
     // Getters
     effectiveTheme,
     // Actions
-    setTheme,
     toggleTheme,
-    applyTheme,
     initTheme,
     addNotification,
     removeNotification,
     showSuccess,
-    setLoading,
   }
 })
