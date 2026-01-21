@@ -107,13 +107,11 @@ import { GovFormControl, GovFormLabel, GovFormInput } from '@gov-design-system-c
 ## Poznámky
 
 - Oficiální design system české státní správy
-- Konzistentní vzhled napříč státními weby
 - Přístupnost (WCAG 2.1 AA) řešena v komponentách
-- Vue wrappery s podporou v-model pro formulářové komponenty
-- SSR hydratace renderuje Web Components na serveru (není potřeba `<ClientOnly>`)
-- Pod kapotou jsou to Web Components (Stencil.js) - sloty se definují HTML atributem `slot="label"`, ne Vue direktivou `v-slot`
-- Vyžaduje `unsafe-inline` v CSP (Stencil.js injektuje styly do Shadow DOM)
-- Gov DS nemá samostatnou textarea komponentu - používá se `<GovFormInput :multiline="true" :rows="4" />`
+- Formulářové komponenty podporují `v-model`
+- Textarea: `<GovFormInput :multiline="true" :rows="4" />`
+- Sloty: HTML atribut `slot="top"`, ne Vue `v-slot`
+- CSP: vyžaduje `unsafe-inline` (Stencil.js)
 
 ## Spuštění
 
