@@ -1,10 +1,12 @@
+const OG_IMAGE_WIDTH = 1200
+const OG_IMAGE_HEIGHT = 630
+const DEFAULT_OG_IMAGE = '/og-image.svg'
+const LOCALE_MAP: Record<string, string> = { cs: 'cs_CZ', en: 'en_US' }
+
 interface PageSeoOptions {
   ogImage?: string
   ogType?: 'website' | 'article'
 }
-
-// Note: SVG placeholder created, convert to PNG (1200x630) for production
-const DEFAULT_OG_IMAGE = '/og-image.svg'
 
 export function usePageSeo(seoKey: string, options: PageSeoOptions = {}) {
   const { t, locale } = useI18n()
@@ -22,10 +24,10 @@ export function usePageSeo(seoKey: string, options: PageSeoOptions = {}) {
     ogDescription: () => t(`seo.${seoKey}.description`),
     ogType,
     ogImage: () => `${baseUrl}${ogImage}`,
-    ogImageWidth: 1200,
-    ogImageHeight: 630,
+    ogImageWidth: OG_IMAGE_WIDTH,
+    ogImageHeight: OG_IMAGE_HEIGHT,
     ogUrl: () => `${baseUrl}${route.path}`,
-    ogLocale: () => locale.value === 'cs' ? 'cs_CZ' : 'en_US',
+    ogLocale: () => LOCALE_MAP[locale.value] || LOCALE_MAP.en,
     twitterCard: 'summary_large_image',
     twitterImage: () => `${baseUrl}${ogImage}`,
   })

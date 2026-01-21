@@ -5,6 +5,7 @@ const STORAGE_KEY_THEME = 'app-theme'
 const DEFAULT_NOTIFICATION_TIMEOUT = 5000
 const MAX_NOTIFICATIONS = 50
 const VALID_THEMES: Theme[] = ['light', 'dark', 'system']
+const DARK_MODE_QUERY = DARK_MODE_QUERY
 
 export const useAppStore = defineStore('app', () => {
   // State
@@ -21,7 +22,7 @@ export const useAppStore = defineStore('app', () => {
   const effectiveTheme = computed<'light' | 'dark'>(() => {
     if (theme.value === 'system') {
       if (import.meta.client) {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        return window.matchMedia(DARK_MODE_QUERY).matches ? 'dark' : 'light'
       }
       return 'light'
     }
@@ -70,7 +71,7 @@ export const useAppStore = defineStore('app', () => {
       applyTheme()
 
       if (!themeMediaQuery) {
-        themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+        themeMediaQuery = window.matchMedia(DARK_MODE_QUERY)
         themeChangeHandler = () => {
           if (theme.value === 'system') {
             applyTheme()

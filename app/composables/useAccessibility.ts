@@ -1,3 +1,6 @@
+const ANNOUNCE_DELAY = 100
+const LIVE_REGION_ID = 'a11y-live-region'
+
 // Shared state across all components
 const isKeyboardUser = ref(false)
 let announceTimeoutId: ReturnType<typeof setTimeout> | null = null
@@ -29,11 +32,11 @@ export function useAccessibility() {
       announceTimeoutId = null
     }
 
-    let liveRegion = document.getElementById('a11y-live-region')
+    let liveRegion = document.getElementById(LIVE_REGION_ID)
 
     if (!liveRegion) {
       liveRegion = document.createElement('div')
-      liveRegion.id = 'a11y-live-region'
+      liveRegion.id = LIVE_REGION_ID
       liveRegion.setAttribute('aria-live', priority)
       liveRegion.setAttribute('aria-atomic', 'true')
       liveRegion.className = 'sr-only'
@@ -45,7 +48,7 @@ export function useAccessibility() {
     announceTimeoutId = setTimeout(() => {
       liveRegion!.textContent = message
       announceTimeoutId = null
-    }, 100)
+    }, ANNOUNCE_DELAY)
   }
 
   function handleSkipLink(targetId: string): void {

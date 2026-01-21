@@ -1,5 +1,7 @@
 import type { Thing, WithContext, WebSite, WebPage, BreadcrumbList, Organization } from 'schema-dts'
 
+const SCHEMA_CONTEXT = 'https://schema.org' as const
+
 type StructuredData = WithContext<Thing>
 
 /**
@@ -37,7 +39,7 @@ export function useStructuredData() {
     logo?: string
   }): WithContext<Organization> {
     return {
-      '@context': 'https://schema.org',
+      '@context': SCHEMA_CONTEXT,
       '@type': 'Organization',
       name: options.name,
       url: options.url || baseUrl,
@@ -53,7 +55,7 @@ export function useStructuredData() {
     description?: string
   }): WithContext<WebSite> {
     return {
-      '@context': 'https://schema.org',
+      '@context': SCHEMA_CONTEXT,
       '@type': 'WebSite',
       name: options.name,
       url: baseUrl,
@@ -69,7 +71,7 @@ export function useStructuredData() {
     description?: string
   }): WithContext<WebPage> {
     return {
-      '@context': 'https://schema.org',
+      '@context': SCHEMA_CONTEXT,
       '@type': 'WebPage',
       name: options.name,
       url: `${baseUrl}${route.path}`,
@@ -84,7 +86,7 @@ export function useStructuredData() {
     items: Array<{ name: string; url: string }>
   ): WithContext<BreadcrumbList> {
     return {
-      '@context': 'https://schema.org',
+      '@context': SCHEMA_CONTEXT,
       '@type': 'BreadcrumbList',
       itemListElement: items.map((item, index) => ({
         '@type': 'ListItem' as const,
