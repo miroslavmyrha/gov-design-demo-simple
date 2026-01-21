@@ -1,15 +1,3 @@
-const SR_ONLY_STYLES = `
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-`
-
 // Shared state across all components
 const isKeyboardUser = ref(false)
 let announceTimeoutId: ReturnType<typeof setTimeout> | null = null
@@ -49,7 +37,6 @@ export function useAccessibility() {
       liveRegion.setAttribute('aria-live', priority)
       liveRegion.setAttribute('aria-atomic', 'true')
       liveRegion.className = 'sr-only'
-      liveRegion.style.cssText = SR_ONLY_STYLES
       document.body.appendChild(liveRegion)
     }
 
