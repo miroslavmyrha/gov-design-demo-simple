@@ -1,3 +1,5 @@
+const APP_NAME = 'Gov Design System Demo'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
@@ -14,7 +16,7 @@ export default defineNuxtConfig({
         lang: 'cs',
         'data-theme': 'light',
       },
-      title: 'Gov Design System Demo',
+      title: APP_NAME,
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -23,7 +25,7 @@ export default defineNuxtConfig({
         { name: 'robots', content: 'index, follow' },
         { property: 'og:type', content: 'website' },
         { property: 'og:locale', content: 'cs_CZ' },
-        { property: 'og:site_name', content: 'Gov Design System Demo' },
+        { property: 'og:site_name', content: APP_NAME },
         { name: 'twitter:card', content: 'summary' },
       ],
       link: [
@@ -34,7 +36,6 @@ export default defineNuxtConfig({
 
   modules: [
     '@pinia/nuxt',
-    '@nuxt/image',
     '@nuxtjs/i18n',
   ],
 
@@ -54,19 +55,6 @@ export default defineNuxtConfig({
     },
   },
 
-  image: {
-    quality: 80,
-    format: ['webp', 'avif', 'png', 'jpg'],
-    screens: {
-      xs: 320,
-      sm: 640,
-      md: 768,
-      lg: 1024,
-      xl: 1280,
-      xxl: 1536,
-    },
-  },
-
   ssr: true,
 
   typescript: {
@@ -80,7 +68,7 @@ export default defineNuxtConfig({
     '@gov-design-system-ce/styles/styles.css',
     '@gov-design-system-ce/styles/content.css',
     '@gov-design-system-ce/styles/components.css',
-    '~/assets/css/demo.css',
+    '~/styles/demo.css',
     '~/styles/main.css',
   ],
 
@@ -102,14 +90,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: '',
-      appEnv: 'development',
       siteUrl: '',
     },
-  },
-
-  experimental: {
-    componentIslands: true,
-    payloadExtraction: true,
   },
 })

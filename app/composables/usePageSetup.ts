@@ -1,3 +1,5 @@
+import { APP_NAME, ORG_NAME } from '~/data/app'
+
 interface BreadcrumbItem {
   nameKey: string
   url: string
@@ -36,11 +38,11 @@ export function usePageSetup(options: PageSetupOptions) {
     // Home page: WebSite + Organization
     addStructuredData([
       createWebSite({
-        name: 'Gov Design System Demo',
+        name: APP_NAME,
         description: t(options.descriptionKey),
       }),
       createOrganization({
-        name: 'Gov Design System',
+        name: ORG_NAME,
         logo: '/og-image.svg',
       }),
     ])

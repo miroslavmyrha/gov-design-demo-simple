@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { GovButton, GovIcon } from '@gov-design-system-ce/vue'
+import { ORG_NAME } from '~/data/app'
 
 const appStore = useAppStore()
 const { t, locale, locales } = useI18n()
@@ -53,7 +54,7 @@ watch(() => currentRoute.path, () => {
       <div class="header-content">
         <div class="header-logo">
           <NuxtLink to="/" class="logo-link">
-            <span class="logo-text">Gov Design System</span>
+            <span class="logo-text">{{ ORG_NAME }}</span>
           </NuxtLink>
         </div>
 
