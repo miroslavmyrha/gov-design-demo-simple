@@ -1,14 +1,20 @@
 {
   "name": "gov-design-demo-simple",
+  "version": "1.0.0",
   "type": "module",
   "private": true,
   "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "typecheck": "vue-tsc --noEmit",
+    "clean": "rm -rf .nuxt .output node_modules/.cache"
   },
   "dependencies": {
     "@gov-design-system-ce/components": "^4.2.9",
