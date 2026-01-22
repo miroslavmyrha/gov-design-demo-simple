@@ -1,7 +1,7 @@
 const APP_NAME = 'Gov Design System Demo'
 
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
+  compatibilityDate: '2026-01-22',
 
   devtools: {
     enabled: true,
