@@ -32,9 +32,27 @@
 
 .demo-row {
   display: flex;
-  gap: 1rem;
   flex-wrap: wrap;
   margin: 1rem 0;
+  /* Fallback for browsers without gap support */
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.demo-row > * {
+  margin: 0.5rem;
+}
+
+/* Use gap when supported */
+@supports (gap: 1rem) {
+  .demo-row {
+    gap: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .demo-row > * {
+    margin: 0;
+  }
 }
 
 /* Feature styles (used on multiple pages) */
@@ -78,9 +96,32 @@
 
 /* Grid utilities - replaces duplicated grid styles across pages */
 .grid-base {
-  display: grid;
-  gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
   margin-top: 1rem;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.grid-base > * {
+  margin: 0.5rem;
+  flex: 1 1 200px;
+  max-width: 100%;
+}
+
+/* Use CSS Grid when supported */
+@supports (display: grid) and (gap: 1rem) {
+  .grid-base {
+    display: grid;
+    gap: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .grid-base > * {
+    margin: 0;
+    flex: none;
+    max-width: none;
+  }
 }
 
 .grid-auto-200 {
@@ -103,6 +144,23 @@
 .flex-wrap-gap {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
   margin-top: 1rem;
+  /* Fallback for browsers without gap support */
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.flex-wrap-gap > * {
+  margin: 0.5rem;
+}
+
+@supports (gap: 1rem) {
+  .flex-wrap-gap {
+    gap: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .flex-wrap-gap > * {
+    margin: 0;
+  }
 }

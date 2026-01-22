@@ -7,6 +7,22 @@ const MAX_NOTIFICATIONS = 50
 const VALID_THEMES: Theme[] = ['light', 'dark', 'system']
 const DARK_MODE_QUERY = '(prefers-color-scheme: dark)'
 
+function safeLocalStorageGet(key: string): string | null {
+  try {
+    return localStorage.getItem(key)
+  } catch {
+    return null
+  }
+}
+
+function safeLocalStorageSet(key: string, value: string): void {
+  try {
+    localStorage.setItem(key, value)
+  } catch {
+    // Safari Private Mode or quota exceeded - silently fail
+  }
+}
+
 export const useAppStore = defineStore('app', () => {
   // State
   const theme = ref<Theme>('light')
@@ -22,7 +38,8 @@ export const useAppStore = defineStore('app', () => {
   const effectiveTheme = computed<'light' | 'dark'>(() => {
     if (theme.value === 'system') {
       if (import.meta.client) {
-        return window.matchMedia(DARK_MODE_QUERY).matches ? 'dark' : 'light'
+        const mediaQuery = themeMediaQuery ?? window.matchMedia(DARK_MODE_QUERY)
+        return mediaQuery.matches ? 'dark' : 'light'
       }
       return 'light'
     }
@@ -52,7 +69,7 @@ export const useAppStore = defineStore('app', () => {
   function setTheme(newTheme: Theme): void {
     theme.value = newTheme
     if (import.meta.client) {
-      localStorage.setItem(STORAGE_KEY_THEME, newTheme)
+      safeLocalStorageSet(STORAGE_KEY_THEME, newTheme)
       applyTheme()
     }
   }
@@ -64,7 +81,7 @@ export const useAppStore = defineStore('app', () => {
 
   function initTheme(): void {
     if (import.meta.client) {
-      const savedTheme = localStorage.getItem(STORAGE_KEY_THEME) as Theme | null
+      const savedTheme = safeLocalStorageGet(STORAGE_KEY_THEME) as Theme | null
       if (savedTheme && VALID_THEMES.includes(savedTheme)) {
         theme.value = savedTheme
       }
@@ -79,6 +96,14 @@ export const useAppStore = defineStore('app', () => {
         }
         themeMediaQuery.addEventListener('change', themeChangeHandler)
       }
+    }
+  }
+
+  function cleanupThemeListener(): void {
+    if (themeMediaQuery && themeChangeHandler) {
+      themeMediaQuery.removeEventListener('change', themeChangeHandler)
+      themeMediaQuery = null
+      themeChangeHandler = null
     }
   }
 
@@ -112,6 +137,14 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
+  function clearAllNotifications(): void {
+    for (const timeoutId of notificationTimeouts.values()) {
+      clearTimeout(timeoutId)
+    }
+    notificationTimeouts.clear()
+    notifications.value = []
+  }
+
   function showSuccess(message: string, timeout?: number): string {
     return addNotification({ type: 'success', message, timeout })
   }
@@ -125,8 +158,10 @@ export const useAppStore = defineStore('app', () => {
     // Actions
     toggleTheme,
     initTheme,
+    cleanupThemeListener,
     addNotification,
     removeNotification,
+    clearAllNotifications,
     showSuccess,
   }
 })

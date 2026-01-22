@@ -4,7 +4,7 @@ const LIVE_REGION_ID = 'a11y-live-region'
 // Shared state across all components
 const isKeyboardUser = ref(false)
 let announceTimeoutId: ReturnType<typeof setTimeout> | null = null
-let listenersRegistered = false
+let listenerCount = 0
 
 function handleKeyDown(e: KeyboardEvent): void {
   if (e.key === 'Tab') {
@@ -57,16 +57,32 @@ export function useAccessibility() {
     const target = document.getElementById(targetId)
     if (target) {
       target.setAttribute('tabindex', '-1')
-      target.focus()
+      target.focus({ preventScroll: false })
       target.removeAttribute('tabindex')
     }
   }
 
   onMounted(() => {
-    if (import.meta.client && !listenersRegistered) {
-      document.addEventListener('keydown', handleKeyDown)
-      document.addEventListener('mousedown', handleMouseDown)
-      listenersRegistered = true
+    if (import.meta.client) {
+      if (listenerCount === 0) {
+        document.addEventListener('keydown', handleKeyDown)
+        document.addEventListener('mousedown', handleMouseDown)
+      }
+      listenerCount++
+    }
+  })
+
+  onUnmounted(() => {
+    if (import.meta.client) {
+      listenerCount--
+      if (listenerCount === 0) {
+        document.removeEventListener('keydown', handleKeyDown)
+        document.removeEventListener('mousedown', handleMouseDown)
+        if (announceTimeoutId) {
+          clearTimeout(announceTimeoutId)
+          announceTimeoutId = null
+        }
+      }
     }
   })
 

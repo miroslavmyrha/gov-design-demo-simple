@@ -43,8 +43,12 @@ async function handleLocaleChange(event: Event) {
   }
 }
 
-watch(() => currentRoute.path, () => {
+const stopRouteWatch = watch(() => currentRoute.path, () => {
   closeMobileMenu()
+})
+
+onBeforeUnmount(() => {
+  stopRouteWatch()
 })
 </script>
 
