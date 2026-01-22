@@ -1,4 +1,4 @@
-import { renderToString } from '@gov-design-system-ce/components/dist/hydrate'
+import { renderToString } from '@gov-design-system-ce/components/dist/hydrate/index.mjs'
 
 export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hook('render:response', async (response) => {
