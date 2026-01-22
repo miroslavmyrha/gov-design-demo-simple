@@ -12,7 +12,7 @@ import { TECH_STACK, FEATURES, PROJECT_STRUCTURE, EXTERNAL_LINKS } from '~/data/
 usePageSetup({
   seoKey: 'about',
   titleKey: 'about.title',
-  descriptionKey: 'about.intro',
+  descriptionKey: 'about.subtitle',
   breadcrumbs: [
     { nameKey: 'nav.home', url: '/' },
     { nameKey: 'nav.about', url: '/o-projektu' },
