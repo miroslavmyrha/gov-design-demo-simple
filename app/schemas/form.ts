@@ -6,7 +6,6 @@ export function createFormSchema(t: TranslateFunction) {
   return z.object({
     name: z.string()
       .trim()
-      .min(1, t('form.validation.nameRequired'))
       .min(2, t('form.validation.nameMinLength'))
       .max(50, t('form.validation.nameMaxLength')),
     email: z.string()
