@@ -1,2 +1,9 @@
 User-Agent: *
-Disallow:
+Allow: /
+
+# Disallow admin/internal paths (if any exist in future)
+Disallow: /api/
+Disallow: /_nuxt/
+
+# Sitemap (uncomment when sitemap is generated)
+# Sitemap: https://example.gov.cz/sitemap.xml

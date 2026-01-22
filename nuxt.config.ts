@@ -56,6 +56,19 @@ export default defineNuxtConfig({
         'upgrade-insecure-requests': process.env.NODE_ENV === 'development' ? false : true,
       },
     },
+    rateLimiter: {
+      tokensPerInterval: 150,
+      interval: 300000, // 5 minutes
+      headers: true,
+      throwError: false,
+    },
+    requestSizeLimiter: {
+      maxRequestSizeInBytes: 2000000, // 2MB
+      maxUploadFileRequestInBytes: 8000000, // 8MB
+    },
+    xssValidator: {
+      throwError: false,
+    },
   },
 
   i18n: {
@@ -79,6 +92,11 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
     typeCheck: true,
+  },
+
+  sourcemap: {
+    server: false,
+    client: false,
   },
 
   css: [
