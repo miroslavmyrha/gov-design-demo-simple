@@ -37,7 +37,26 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     '@nuxtjs/i18n',
+    'nuxt-security',
   ],
+
+  security: {
+    ssg: false,
+    headers: {
+      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+      contentSecurityPolicy: {
+        'base-uri': ['\'self\''],
+        'font-src': ['\'self\'', 'https:', 'data:'],
+        'form-action': ['\'self\''],
+        'frame-ancestors': ['\'self\''],
+        'img-src': ['\'self\'', 'data:'],
+        'object-src': ['\'none\''],
+        'script-src-attr': ['\'none\''],
+        'style-src': ['\'self\'', 'https:', '\'unsafe-inline\''],
+        'upgrade-insecure-requests': true,
+      },
+    },
+  },
 
   i18n: {
     locales: [
