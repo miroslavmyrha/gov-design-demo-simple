@@ -1,12 +1,4 @@
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(() => {
   const appStore = useAppStore()
   appStore.initTheme()
-
-  nuxtApp.hook('app:beforeMount', () => {
-    appStore.initTheme()
-  })
-
-  nuxtApp.hook('app:unmount' as never, () => {
-    appStore.cleanupThemeListener()
-  })
 })
