@@ -1,10 +1,10 @@
 const ANNOUNCE_DELAY = 100
 const LIVE_REGION_ID = 'a11y-live-region'
 
-// Shared state across all components
+// Shared state - initialized once by plugin
 const isKeyboardUser = ref(false)
 let announceTimeoutId: ReturnType<typeof setTimeout> | null = null
-let listenerCount = 0
+let initialized = false
 
 function handleKeyDown(e: KeyboardEvent): void {
   if (e.key === 'Tab') {
@@ -14,6 +14,35 @@ function handleKeyDown(e: KeyboardEvent): void {
 
 function handleMouseDown(): void {
   isKeyboardUser.value = false
+}
+
+/**
+ * Initialize keyboard/mouse detection listeners.
+ * Called once by accessibility.client.ts plugin.
+ */
+export function initAccessibilityDetection(): void {
+  if (initialized || !import.meta.client) return
+
+  document.addEventListener('keydown', handleKeyDown)
+  document.addEventListener('mousedown', handleMouseDown)
+  initialized = true
+}
+
+/**
+ * Cleanup accessibility listeners and pending timeouts.
+ */
+export function cleanupAccessibility(): void {
+  if (!initialized || !import.meta.client) return
+
+  document.removeEventListener('keydown', handleKeyDown)
+  document.removeEventListener('mousedown', handleMouseDown)
+
+  if (announceTimeoutId) {
+    clearTimeout(announceTimeoutId)
+    announceTimeoutId = null
+  }
+
+  initialized = false
 }
 
 export function useAccessibility() {
@@ -61,30 +90,6 @@ export function useAccessibility() {
       target.removeAttribute('tabindex')
     }
   }
-
-  onMounted(() => {
-    if (import.meta.client) {
-      if (listenerCount === 0) {
-        document.addEventListener('keydown', handleKeyDown)
-        document.addEventListener('mousedown', handleMouseDown)
-      }
-      listenerCount++
-    }
-  })
-
-  onUnmounted(() => {
-    if (import.meta.client) {
-      listenerCount--
-      if (listenerCount === 0) {
-        document.removeEventListener('keydown', handleKeyDown)
-        document.removeEventListener('mousedown', handleMouseDown)
-        if (announceTimeoutId) {
-          clearTimeout(announceTimeoutId)
-          announceTimeoutId = null
-        }
-      }
-    }
-  })
 
   return {
     isKeyboardUser: readonly(isKeyboardUser),

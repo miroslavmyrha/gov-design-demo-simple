@@ -27,3 +27,4 @@ npm-debug.log*
 pnpm-debug.log*
 ARCHITECTURE.md
 LESSONS_LEARNED.md
+package-lock.json

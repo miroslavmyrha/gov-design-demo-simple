@@ -24,7 +24,7 @@ export function useStructuredData() {
       script: [
         {
           type: 'application/ld+json',
-          innerHTML: jsonLd,
+          textContent: jsonLd,
         },
       ],
     })

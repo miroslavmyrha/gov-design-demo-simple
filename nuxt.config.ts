@@ -4,9 +4,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-01-22',
 
   devtools: {
-    enabled: true,
+    enabled: process.env.NODE_ENV === 'development',
     timeline: {
-      enabled: true,
+      enabled: process.env.NODE_ENV === 'development',
     },
   },
 
@@ -44,7 +44,21 @@ export default defineNuxtConfig({
     ssg: false,
     headers: {
       crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+      strictTransportSecurity: {
+        maxAge: 31536000,
+        includeSubdomains: true,
+        preload: true,
+      },
+      referrerPolicy: 'strict-origin-when-cross-origin',
+      permissionsPolicy: {
+        camera: [],
+        microphone: [],
+        geolocation: [],
+        'display-capture': [],
+      },
       contentSecurityPolicy: {
+        'default-src': ['\'self\''],
+        'script-src': ['\'self\''],
         'base-uri': ['\'self\''],
         'font-src': ['\'self\'', 'data:'],
         'form-action': ['\'self\''],
