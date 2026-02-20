@@ -27,7 +27,6 @@ export default {
     loading: 'Loading...',
     error: 'An error occurred',
     tryAgain: 'Try again',
-    backToHome: 'Back to home page',
     submit: 'Submit',
     reset: 'Reset',
     required: 'required',
@@ -100,7 +99,7 @@ export default {
         label: 'Gender',
         rule1: 'Required selection',
       },
-      terms: {
+      agreeTerms: {
         label: 'Terms agreement',
         rule1: 'Must be checked',
       },

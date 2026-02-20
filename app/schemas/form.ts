@@ -25,15 +25,12 @@ export function createFormSchema(t: TranslateFunction) {
   })
 }
 
+const FIELD_KEYS = ['name', 'email', 'note', 'option', 'gender', 'agreeTerms'] as const
+
 export function createFieldLabels(t: TranslateFunction): Record<string, string> {
-  return {
-    name: t('form.fields.name.label'),
-    email: t('form.fields.email.label'),
-    note: t('form.fields.note.label'),
-    option: t('form.fields.option.label'),
-    gender: t('form.fields.gender.label'),
-    agreeTerms: t('form.fields.agreeTerms.label'),
-  }
+  return Object.fromEntries(
+    FIELD_KEYS.map(key => [key, t(`form.fields.${key}.label`)]),
+  )
 }
 
 export type FormData = z.infer<ReturnType<typeof createFormSchema>>

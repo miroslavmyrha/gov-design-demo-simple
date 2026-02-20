@@ -5,20 +5,19 @@ interface CardConfig {
   key: string
   icon?: string
   hasButton?: boolean
-  promotion?: boolean
 }
 
 const cards: CardConfig[] = [
   { key: 'basic' },
   { key: 'info', icon: 'info-circle' },
-  { key: 'withAction', hasButton: true, promotion: true },
+  { key: 'withAction', hasButton: true },
 ]
 </script>
 
 <template>
   <DemoSection title-key="demo.card.title">
     <div class="grid-base grid-auto-250">
-      <GovCard v-for="card in cards" :key="card.key" :promotion="card.promotion ?? false">
+      <GovCard v-for="card in cards" :key="card.key">
         <div class="card-content">
           <div v-if="card.icon" class="card-icon">
             <GovIcon :name="card.icon" />

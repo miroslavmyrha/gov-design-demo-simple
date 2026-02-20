@@ -27,7 +27,6 @@ export default {
     loading: 'Načítání...',
     error: 'Nastala chyba',
     tryAgain: 'Zkusit znovu',
-    backToHome: 'Zpět na úvodní stránku',
     submit: 'Odeslat',
     reset: 'Vymazat',
     required: 'povinné',
@@ -100,7 +99,7 @@ export default {
         label: 'Pohlaví',
         rule1: 'Povinný výběr',
       },
-      terms: {
+      agreeTerms: {
         label: 'Souhlas s podmínkami',
         rule1: 'Musí být zaškrtnuto',
       },

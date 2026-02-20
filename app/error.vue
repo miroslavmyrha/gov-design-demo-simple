@@ -12,8 +12,8 @@ const isDev = import.meta.dev
 const statusCode = computed(() => props.error?.statusCode || 500)
 
 const safeCode = computed<ErrorCode>(() => {
-  const code = statusCode.value
-  return VALID_ERROR_CODES.includes(code as ErrorCode) ? (code as ErrorCode) : 500
+  const code = statusCode.value as ErrorCode
+  return VALID_ERROR_CODES.includes(code) ? code : 500
 })
 
 const errorInfo = computed(() => ({

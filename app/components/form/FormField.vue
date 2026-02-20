@@ -36,9 +36,9 @@ function handleBlur() {
 </script>
 
 <template>
-  <GovFormControl :class="{ 'has-error': showError }">
-    <GovFormLabel slot="top">
-      {{ label }}{{ required ? ' *' : '' }}
+  <GovFormControl :invalid="showError" :success="showSuccess">
+    <GovFormLabel slot="top" :required="required">
+      {{ label }}
     </GovFormLabel>
     <GovFormInput
       :model-value="modelValue"
