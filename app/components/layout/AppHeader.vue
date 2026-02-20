@@ -2,7 +2,6 @@
 import { GovButton, GovIcon } from '@gov-design-system-ce/vue'
 import { ORG_NAME } from '~/data/app'
 
-const appStore = useAppStore()
 const { t, locale, locales } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
@@ -24,8 +23,17 @@ const navItems = computed(() => [
   { label: t('nav.about'), href: localePath('/o-projektu') },
 ])
 
+interface LocaleInfo {
+  code: string
+  name: string
+}
+
+function isLocaleObject(loc: unknown): loc is LocaleInfo {
+  return typeof loc === 'object' && loc !== null && 'code' in loc
+}
+
 const availableLocales = computed(() =>
-  locales.value.filter(loc => typeof loc === 'object' && 'code' in loc) as Array<{ code: string; name: string }>
+  locales.value.filter(isLocaleObject),
 )
 
 const currentRoute = useRoute()
@@ -43,12 +51,8 @@ async function handleLocaleChange(event: Event) {
   }
 }
 
-const stopRouteWatch = watch(() => currentRoute.path, () => {
+watch(() => currentRoute.path, () => {
   closeMobileMenu()
-})
-
-onBeforeUnmount(() => {
-  stopRouteWatch()
 })
 </script>
 
@@ -88,15 +92,7 @@ onBeforeUnmount(() => {
             </option>
           </select>
 
-          <GovButton
-            class="desktop-theme-toggle"
-            type="outlined"
-            size="s"
-            :wcag-label="appStore.effectiveTheme === 'light' ? $t('theme.switchToDark') : $t('theme.switchToLight')"
-            @gov-click="appStore.toggleTheme()"
-          >
-            <GovIcon :name="appStore.effectiveTheme === 'light' ? 'moon' : 'sun'" />
-          </GovButton>
+          <UiThemeToggle variant="desktop" />
 
           <button
             class="mobile-menu-toggle"
@@ -129,12 +125,7 @@ onBeforeUnmount(() => {
           </li>
         </ul>
 
-        <div class="mobile-theme-toggle">
-          <button class="theme-toggle-btn" @click="appStore.toggleTheme()">
-            <GovIcon :name="appStore.effectiveTheme === 'light' ? 'sun' : 'moon'" />
-            <span>{{ appStore.effectiveTheme === 'light' ? $t('theme.light') : $t('theme.dark') }}</span>
-          </button>
-        </div>
+        <UiThemeToggle variant="mobile" />
       </nav>
     </div>
   </header>

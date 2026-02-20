@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia'
-import type { Theme, Notification } from '~/types/app'
+import type { Theme } from '~/types/app'
 
 const STORAGE_KEY_THEME = 'app-theme'
-const DEFAULT_NOTIFICATION_TIMEOUT = 5000
-const MAX_NOTIFICATIONS = 50
 const VALID_THEMES: Theme[] = ['light', 'dark', 'system']
 const DARK_MODE_QUERY = '(prefers-color-scheme: dark)'
 
@@ -23,18 +21,12 @@ function safeLocalStorageSet(key: string, value: string): void {
   }
 }
 
-export const useAppStore = defineStore('app', () => {
-  // State
+export const useThemeStore = defineStore('theme', () => {
   const theme = ref<Theme>('light')
-  const notifications = ref<Notification[]>([])
 
-
-  // Private state (not exposed)
   let themeMediaQuery: MediaQueryList | null = null
   let themeChangeHandler: ((e: MediaQueryListEvent) => void) | null = null
-  const notificationTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
 
-  // Getters
   const effectiveTheme = computed<'light' | 'dark'>(() => {
     if (theme.value === 'system') {
       if (import.meta.client) {
@@ -46,20 +38,6 @@ export const useAppStore = defineStore('app', () => {
     return theme.value
   })
 
-  // Private functions
-  function generateNotificationId(): string {
-    return `notification-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
-  }
-
-  function clearNotificationTimeout(id: string): void {
-    const timeoutId = notificationTimeouts.get(id)
-    if (timeoutId) {
-      clearTimeout(timeoutId)
-      notificationTimeouts.delete(id)
-    }
-  }
-
-  // Actions
   function applyTheme(): void {
     if (import.meta.client) {
       document.documentElement.setAttribute('data-theme', effectiveTheme.value)
@@ -67,6 +45,7 @@ export const useAppStore = defineStore('app', () => {
   }
 
   function setTheme(newTheme: Theme): void {
+    if (!VALID_THEMES.includes(newTheme)) return
     theme.value = newTheme
     if (import.meta.client) {
       safeLocalStorageSet(STORAGE_KEY_THEME, newTheme)
@@ -107,61 +86,11 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
-  function addNotification(notification: Omit<Notification, 'id'>): string {
-    const id = generateNotificationId()
-    const newNotification: Notification = { ...notification, id }
-
-    notifications.value.push(newNotification)
-
-    while (notifications.value.length > MAX_NOTIFICATIONS) {
-      const removed = notifications.value.shift()
-      if (removed) {
-        clearNotificationTimeout(removed.id)
-      }
-    }
-
-    if (notification.timeout !== 0) {
-      const timeout = notification.timeout ?? DEFAULT_NOTIFICATION_TIMEOUT
-      const timeoutId = setTimeout(() => removeNotification(id), timeout)
-      notificationTimeouts.set(id, timeoutId)
-    }
-
-    return id
-  }
-
-  function removeNotification(id: string): void {
-    clearNotificationTimeout(id)
-    const index = notifications.value.findIndex((n) => n.id === id)
-    if (index > -1) {
-      notifications.value.splice(index, 1)
-    }
-  }
-
-  function clearAllNotifications(): void {
-    for (const timeoutId of notificationTimeouts.values()) {
-      clearTimeout(timeoutId)
-    }
-    notificationTimeouts.clear()
-    notifications.value = []
-  }
-
-  function showSuccess(message: string, timeout?: number): string {
-    return addNotification({ type: 'success', message, timeout })
-  }
-
   return {
-    // State
     theme,
-    notifications,
-    // Getters
     effectiveTheme,
-    // Actions
     toggleTheme,
     initTheme,
     cleanupThemeListener,
-    addNotification,
-    removeNotification,
-    clearAllNotifications,
-    showSuccess,
   }
 })

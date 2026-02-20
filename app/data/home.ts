@@ -1,4 +1,9 @@
-import type { FeatureCard } from '~/types/ui'
+export interface FeatureCard {
+  titleKey: string
+  descriptionKey: string
+  link: string
+  icon: string
+}
 
 export const FEATURE_CONFIGS: FeatureCard[] = [
   { titleKey: 'components', descriptionKey: 'components', link: '/komponenty', icon: 'list' },

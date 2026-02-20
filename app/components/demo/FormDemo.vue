@@ -1,14 +1,5 @@
 <script setup lang="ts">
-import {
-  GovButton,
-  GovFormCheckbox,
-  GovFormControl,
-  GovFormLabel,
-  GovFormMessage,
-  GovFormRadio,
-  GovFormRadioGroup,
-  GovFormSelect,
-} from '@gov-design-system-ce/vue'
+import { GovButton } from '@gov-design-system-ce/vue'
 import { useFormValidation } from '~/composables/useFormValidation'
 import { createFormSchema, createFieldLabels, defaultFormData } from '~/schemas/form'
 
@@ -21,12 +12,7 @@ interface TextFieldConfig {
   rows?: number
 }
 
-interface SelectOption {
-  value: string
-  labelKey: string
-}
-
-const appStore = useAppStore()
+const notificationStore = useNotificationStore()
 const { announce } = useAccessibility()
 const { t } = useI18n()
 
@@ -35,11 +21,16 @@ const formKey = ref(0)
 const localizedSchema = computed(() => createFormSchema(t))
 const localizedFieldLabels = computed(() => createFieldLabels(t))
 
-const selectOptions: SelectOption[] = [
-  { value: '1', labelKey: 'form.fields.option.options.option1' },
-  { value: '2', labelKey: 'form.fields.option.options.option2' },
-  { value: '3', labelKey: 'form.fields.option.options.option3' },
-]
+const selectOptions = computed(() => [
+  { value: '1', label: t('form.fields.option.options.option1') },
+  { value: '2', label: t('form.fields.option.options.option2') },
+  { value: '3', label: t('form.fields.option.options.option3') },
+])
+
+const genderOptions = computed(() => [
+  { value: 'm', label: t('form.fields.gender.male') },
+  { value: 'f', label: t('form.fields.gender.female') },
+])
 
 const textFields: TextFieldConfig[] = [
   { key: 'name', inputType: 'text', required: true, showSuccess: true },
@@ -68,13 +59,17 @@ function handleSubmit(): void {
   const result = validate()
 
   if (result.success) {
-    appStore.showSuccess(t('form.successMessage'))
+    notificationStore.showSuccess(t('form.successMessage'))
     announce(t('form.successMessage'), 'polite')
     resetForm()
   } else {
     const errorCount = result.error.issues.length
     announce(t('form.errorCount', { count: errorCount }, errorCount), 'assertive')
   }
+}
+
+function shouldShowFieldSuccess(field: TextFieldConfig): boolean {
+  return Boolean(field.showSuccess && isFieldValid(field.key) && String(formData.value[field.key] ?? '').length > 0)
 }
 
 function resetForm(): void {
@@ -100,59 +95,37 @@ function resetForm(): void {
         :rows="field.rows"
         :show-error="shouldShowError(field.key)"
         :error="getError(field.key)"
-        :show-success="field.showSuccess && isFieldValid(field.key) && String(formData[field.key] ?? '').length > 0"
+        :show-success="shouldShowFieldSuccess(field)"
         @update:model-value="(v: string) => formData[field.key] = v"
         @blur="markTouched(field.key)"
       />
 
-      <GovFormControl>
-        <GovFormLabel slot="top">{{ $t('form.fields.option.label') }}</GovFormLabel>
-        <GovFormSelect v-model="formData.option">
-          <option value="">{{ $t('form.fields.option.placeholder') }}</option>
-          <option v-for="opt in selectOptions" :key="opt.value" :value="opt.value">
-            {{ $t(opt.labelKey) }}
-          </option>
-        </GovFormSelect>
-      </GovFormControl>
+      <FormSelectField
+        :model-value="formData.option ?? ''"
+        @update:model-value="(v: string) => formData.option = v"
+        :label="$t('form.fields.option.label')"
+        :placeholder="$t('form.fields.option.placeholder')"
+        :options="selectOptions"
+      />
 
-      <GovFormControl :class="{ 'has-error': shouldShowError('gender') }">
-        <GovFormLabel slot="top">{{ $t('form.fields.gender.label') }} *</GovFormLabel>
-        <GovFormRadioGroup
-          v-model="formData.gender"
-          gap="m"
-          @gov-change="markTouched('gender')"
-        >
-          <GovFormRadio value="m">
-            <GovFormLabel slot="label">{{ $t('form.fields.gender.male') }}</GovFormLabel>
-          </GovFormRadio>
-          <GovFormRadio value="f">
-            <GovFormLabel slot="label">{{ $t('form.fields.gender.female') }}</GovFormLabel>
-          </GovFormRadio>
-        </GovFormRadioGroup>
-        <GovFormMessage
-          v-if="shouldShowError('gender')"
-          slot="bottom"
-          color="error"
-        >
-          {{ getError('gender') }}
-        </GovFormMessage>
-      </GovFormControl>
+      <FormRadioField
+        v-model="formData.gender"
+        :label="$t('form.fields.gender.label')"
+        :required="true"
+        :options="genderOptions"
+        :show-error="shouldShowError('gender')"
+        :error="getError('gender')"
+        @change="markTouched('gender')"
+      />
 
-      <GovFormControl :class="{ 'has-error': shouldShowError('agreeTerms') }">
-        <GovFormCheckbox
-          v-model="formData.agreeTerms"
-          @gov-change="markTouched('agreeTerms')"
-        >
-          <GovFormLabel slot="label">{{ $t('form.fields.agreeTerms.label') }} *</GovFormLabel>
-        </GovFormCheckbox>
-        <GovFormMessage
-          v-if="shouldShowError('agreeTerms')"
-          slot="bottom"
-          color="error"
-        >
-          {{ getError('agreeTerms') }}
-        </GovFormMessage>
-      </GovFormControl>
+      <FormCheckboxField
+        v-model="formData.agreeTerms"
+        :label="$t('form.fields.agreeTerms.label')"
+        :required="true"
+        :show-error="shouldShowError('agreeTerms')"
+        :error="getError('agreeTerms')"
+        @change="markTouched('agreeTerms')"
+      />
 
       <div class="demo-row">
         <GovButton
@@ -183,10 +156,5 @@ form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-
-.has-error {
-  border-left: 3px solid var(--icon-error);
-  padding-left: 0.5rem;
 }
 </style>

@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { GovButton, GovCard, GovIcon } from '@gov-design-system-ce/vue'
+import { APP_NAME, ORG_NAME } from '~/data/app'
 import { FEATURE_CONFIGS } from '~/data/home'
 
-const { t } = usePageSetup({
-  seoKey: 'home',
-  titleKey: 'home.title',
-  descriptionKey: 'home.subtitle',
-  isHome: true,
-})
+const { t } = useI18n()
+
+usePageSeo('home')
+
+const { addStructuredData, createWebSite, createOrganization } = useStructuredData()
+addStructuredData([
+  createWebSite({ name: APP_NAME, description: t('home.subtitle') }),
+  createOrganization({ name: ORG_NAME, logo: '/og-image.svg' }),
+])
 
 const localePath = useLocalePath()
 
@@ -24,10 +28,7 @@ const features = computed(() =>
 <template>
   <div class="gov-container">
     <section class="hero-section">
-      <h1 class="gov-text--2xl">{{ $t('home.title') }}</h1>
-      <p class="gov-text--l">
-        {{ $t('home.subtitle') }}
-      </p>
+      <UiPageHeader :title="$t('home.title')" :subtitle="$t('home.subtitle')" />
 
       <div class="hero-actions">
         <GovButton color="primary" type="solid" size="l" :href="localePath('/komponenty')">
@@ -65,7 +66,7 @@ const features = computed(() =>
     <DemoSection title-key="home.componentPreview">
       <p>{{ $t('home.componentPreviewDescription') }}</p>
 
-      <NuxtErrorBoundary>
+      <UiErrorBoundaryWrapper :error-title="$t('home.errorLoadingComponents')">
         <LazyDemoButtonsDemo />
         <LazyDemoMessagesDemo />
 
@@ -74,15 +75,7 @@ const features = computed(() =>
             {{ $t('home.viewAllComponents') }}
           </GovButton>
         </div>
-
-        <template #error="{ error, clearError }">
-          <ErrorMessage
-            :title="$t('home.errorLoadingComponents')"
-            :error="error"
-            :clear-error="clearError"
-          />
-        </template>
-      </NuxtErrorBoundary>
+      </UiErrorBoundaryWrapper>
     </DemoSection>
   </div>
 </template>

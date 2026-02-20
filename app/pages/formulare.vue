@@ -2,33 +2,27 @@
 import { GovAccordion, GovAccordionItem } from '@gov-design-system-ce/vue'
 import { FIELD_RULE_KEYS, VALIDATION_FIELDS } from '~/data/forms'
 
-const { t } = usePageSetup({
-  seoKey: 'forms',
-  titleKey: 'forms.title',
-  descriptionKey: 'forms.subtitle',
-  breadcrumbs: [
-    { nameKey: 'nav.home', url: '/' },
-    { nameKey: 'nav.forms', url: '/formulare' },
-  ],
-})
+const { t } = useI18n()
+
+usePageSeo('forms')
+
+const { addStructuredData, createWebPage, createBreadcrumbs } = useStructuredData()
+addStructuredData([
+  createWebPage({ name: t('seo.forms.title'), description: t('seo.forms.description') }),
+  createBreadcrumbs([
+    { name: t('nav.home'), url: '/' },
+    { name: t('nav.forms'), url: '/formulare' },
+  ]),
+])
 </script>
 
 <template>
   <div class="gov-container">
-    <h1 class="gov-text--2xl">{{ $t('forms.title') }}</h1>
-    <p class="gov-text--l">{{ $t('forms.subtitle') }}</p>
+    <UiPageHeader :title="$t('forms.title')" :subtitle="$t('forms.subtitle')" />
 
-    <NuxtErrorBoundary>
+    <UiErrorBoundaryWrapper :error-title="$t('forms.errorLoading')">
       <LazyDemoFormDemo />
-
-      <template #error="{ error, clearError }">
-        <ErrorMessage
-          :title="$t('forms.errorLoading')"
-          :error="error"
-          :clear-error="clearError"
-        />
-      </template>
-    </NuxtErrorBoundary>
+    </UiErrorBoundaryWrapper>
 
     <DemoSection title-key="forms.validationRulesTitle">
       <p>{{ $t('forms.validationRulesDescription') }}</p>

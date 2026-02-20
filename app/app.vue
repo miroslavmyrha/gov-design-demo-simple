@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const appStore = useAppStore()
+const themeStore = useThemeStore()
 
 useHead(() => ({
   htmlAttrs: {
-    'data-theme': appStore.effectiveTheme,
+    'data-theme': themeStore.effectiveTheme,
   },
 }))
 </script>

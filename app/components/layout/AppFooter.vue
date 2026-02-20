@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ExternalLink } from '~/types/ui'
+import type { ExternalLink } from '~/data/about'
 
 const { t } = useI18n()
 

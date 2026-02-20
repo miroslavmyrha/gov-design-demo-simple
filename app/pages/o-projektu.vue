@@ -9,21 +9,23 @@ import {
 } from '@gov-design-system-ce/vue'
 import { TECH_STACK, FEATURES, PROJECT_STRUCTURE, EXTERNAL_LINKS } from '~/data/about'
 
-usePageSetup({
-  seoKey: 'about',
-  titleKey: 'about.title',
-  descriptionKey: 'about.subtitle',
-  breadcrumbs: [
-    { nameKey: 'nav.home', url: '/' },
-    { nameKey: 'nav.about', url: '/o-projektu' },
-  ],
-})
+const { t } = useI18n()
+
+usePageSeo('about')
+
+const { addStructuredData, createWebPage, createBreadcrumbs } = useStructuredData()
+addStructuredData([
+  createWebPage({ name: t('seo.about.title'), description: t('seo.about.description') }),
+  createBreadcrumbs([
+    { name: t('nav.home'), url: '/' },
+    { name: t('nav.about'), url: '/o-projektu' },
+  ]),
+])
 </script>
 
 <template>
   <div class="gov-container">
-    <h1 class="gov-text--2xl">{{ $t('about.title') }}</h1>
-    <p class="gov-text--l">{{ $t('about.subtitle') }}</p>
+    <UiPageHeader :title="$t('about.title')" :subtitle="$t('about.subtitle')" />
 
     <!-- Tech Stack -->
     <DemoSection title-key="about.techStackTitle">
@@ -59,7 +61,7 @@ usePageSetup({
         <GovAccordionItem
           v-for="section in PROJECT_STRUCTURE"
           :key="section.key"
-          :is-expanded="section.isExpanded"
+          :open="section.isExpanded"
         >
           <h3 slot="label">{{ $t(`about.projectStructure.${section.key}.title`) }}</h3>
           <p>{{ $t(`about.projectStructure.${section.key}.description`) }}</p>

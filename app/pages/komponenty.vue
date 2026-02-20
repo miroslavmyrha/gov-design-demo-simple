@@ -1,21 +1,23 @@
 <script setup lang="ts">
-usePageSetup({
-  seoKey: 'components',
-  titleKey: 'components.title',
-  descriptionKey: 'components.subtitle',
-  breadcrumbs: [
-    { nameKey: 'nav.home', url: '/' },
-    { nameKey: 'nav.components', url: '/komponenty' },
-  ],
-})
+const { t } = useI18n()
+
+usePageSeo('components')
+
+const { addStructuredData, createWebPage, createBreadcrumbs } = useStructuredData()
+addStructuredData([
+  createWebPage({ name: t('seo.components.title'), description: t('seo.components.description') }),
+  createBreadcrumbs([
+    { name: t('nav.home'), url: '/' },
+    { name: t('nav.components'), url: '/komponenty' },
+  ]),
+])
 </script>
 
 <template>
   <div class="gov-container">
-    <h1 class="gov-text--2xl">{{ $t('components.title') }}</h1>
-    <p class="gov-text--l">{{ $t('components.subtitle') }}</p>
+    <UiPageHeader :title="$t('components.title')" :subtitle="$t('components.subtitle')" />
 
-    <NuxtErrorBoundary>
+    <UiErrorBoundaryWrapper :error-title="$t('components.errorLoading')">
       <LazyDemoButtonsDemo />
       <LazyDemoAccordionDemo />
       <LazyDemoTabsDemo />
@@ -24,14 +26,6 @@ usePageSetup({
       <LazyDemoCardDemo />
       <LazyDemoBreadcrumbsDemo />
       <LazyDemoPaginationDemo />
-
-      <template #error="{ error, clearError }">
-        <ErrorMessage
-          :title="$t('components.errorLoading')"
-          :error="error"
-          :clear-error="clearError"
-        />
-      </template>
-    </NuxtErrorBoundary>
+    </UiErrorBoundaryWrapper>
   </div>
 </template>

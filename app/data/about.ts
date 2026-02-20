@@ -1,4 +1,24 @@
-import type { TechStackItem, AboutFeature, ProjectStructureSection, ExternalLink } from '~/types/ui'
+export interface TechStackItem {
+  name: string
+  version: string
+  descriptionKey: string
+}
+
+export interface AboutFeature {
+  icon: string
+  titleKey: string
+}
+
+export interface ProjectStructureSection {
+  key: string
+  isExpanded?: boolean
+  items: string[]
+}
+
+export interface ExternalLink {
+  label: string
+  href: string
+}
 
 export const TECH_STACK: TechStackItem[] = [
   { name: 'Nuxt 4', version: '4.2.x', descriptionKey: 'nuxt' },
