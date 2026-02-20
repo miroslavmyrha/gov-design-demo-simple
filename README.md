@@ -56,7 +56,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
 Server plugin - SSR hydratace:
 ```typescript
 // server/plugins/design-system.ts
-import { renderToString } from '@gov-design-system-ce/components/dist/hydrate'
+import { renderToString } from '@gov-design-system-ce/components/dist/hydrate/index.mjs'
 
 export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hook('render:response', async (response) => {
@@ -110,7 +110,7 @@ import { GovFormControl, GovFormLabel, GovFormInput } from '@gov-design-system-c
 - Přístupnost (WCAG 2.1 AA) řešena v komponentách
 - Formulářové komponenty podporují `v-model`
 - Textarea: `<GovFormInput :multiline="true" :rows="4" />`
-- CSP: vyžaduje `unsafe-inline` (Stencil.js)
+- CSP: vyžaduje `style-src 'unsafe-inline'` (Stencil.js generuje inline styly)
 
 ## Spuštění
 
