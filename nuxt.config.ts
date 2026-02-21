@@ -83,7 +83,7 @@ export default defineNuxtConfig({
       maxUploadFileRequestInBytes: 8000000, // 8MB
     },
     xssValidator: {
-      throwError: false,
+      throwError: true,
     },
   },
 
