@@ -1,12 +1,10 @@
-export default defineNuxtPlugin(() => {
-  const themeStore = useThemeStore()
+export default defineNuxtPlugin((nuxtApp) => {
+  const themeStore = useThemeStore(nuxtApp.$pinia as import('pinia').Pinia)
   themeStore.initTheme()
-})
 
-// Cleanup on HMR dispose in development
-if (import.meta.hot) {
-  import.meta.hot.dispose(() => {
-    const themeStore = useThemeStore()
-    themeStore.cleanupThemeListener()
-  })
-}
+  if (import.meta.hot) {
+    import.meta.hot.dispose(() => {
+      themeStore.cleanupThemeListener()
+    })
+  }
+})

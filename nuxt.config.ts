@@ -58,7 +58,9 @@ export default defineNuxtConfig({
       },
       contentSecurityPolicy: {
         'default-src': ['\'self\''],
-        'script-src': ['\'self\''],
+        'script-src': process.env.NODE_ENV === 'development'
+          ? ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\'']
+          : ['\'self\''],
         'base-uri': ['\'self\''],
         'font-src': ['\'self\'', 'data:'],
         'form-action': ['\'self\''],
