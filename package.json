@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "private": true,
+  "license": "EUPL-1.2",
   "packageManager": "pnpm@10.28.0",
   "engines": {
     "node": ">=20.0.0"

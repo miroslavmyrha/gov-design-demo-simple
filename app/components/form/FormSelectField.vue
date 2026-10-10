@@ -26,10 +26,10 @@ const emit = defineEmits<{
 
 <template>
   <GovFormControl :invalid="showError">
-    <GovFormLabel slot="top" :identifier="fieldId" :required="required">
+    <GovFormLabel slot="top" :identifier="fieldId" :required="required" data-allow-mismatch="attribute">
       {{ label }}
     </GovFormLabel>
-    <GovFormSelect :identifier="fieldId" :model-value="modelValue" :invalid="showError" @update:model-value="emit('update:modelValue', $event)" @gov-blur="emit('blur')">
+    <GovFormSelect :identifier="fieldId" :required="required" :model-value="modelValue" :invalid="showError" @update:model-value="emit('update:modelValue', $event)" @gov-blur="emit('blur')">
       <option v-if="placeholder" value="">{{ placeholder }}</option>
       <option v-for="opt in options" :key="opt.value" :value="opt.value">
         {{ opt.label }}

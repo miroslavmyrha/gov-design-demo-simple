@@ -40,11 +40,12 @@ function handleBlur() {
 
 <template>
   <GovFormControl :invalid="showError" :success="showSuccess">
-    <GovFormLabel slot="top" :identifier="fieldId" :required="required">
+    <GovFormLabel slot="top" :identifier="fieldId" :required="required" data-allow-mismatch="attribute">
       {{ label }}
     </GovFormLabel>
     <GovFormInput
       :identifier="fieldId"
+      :required="required"
       :model-value="modelValue"
       :placeholder="placeholder"
       :multiline="multiline"

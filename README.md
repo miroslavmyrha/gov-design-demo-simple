@@ -120,6 +120,7 @@ Popisek a pole spojuje stejný `identifier`. Bez něj se popisek jen zobrazí ve
 - Oficiální design system české státní správy
 - Přístupnost řeší komponenty jen zčásti: spojení popisku s polem (`identifier`), souhrn chyb a ohlášení změn čtečce jsou na aplikaci
 - Formulářové komponenty podporují `v-model`
+- `required` předávejte poli i popisku. Pole ho svému popisku přepisuje, takže popisek označený jako povinný u pole bez `required` po načtení stránky ztratí hvězdičku
 - Textarea: `<GovFormInput :multiline="true" :rows="4" />`
 - CSP: vyžaduje `style-src 'unsafe-inline'` (Stencil.js generuje inline styly)
 - CSP: `script-src` musí povolit inline skript Nuxtu, nejlépe přes nonce (`'nonce-{{nonce}}' 'strict-dynamic'` v `nuxt-security`). Se samotným `'self'` se stránka vykreslí, ale v prohlížeči neoživí, a ve vývojovém režimu se to neprojeví
@@ -161,6 +162,10 @@ i18n/locales     překlady cs a en
 server/plugins   vykreslení komponent design systému na serveru
 tests            unit testy
 ```
+
+## Licence
+
+Kód dema je pod [EUPL 1.2](LICENCE), stejně jako Gov Design System CE. Složka `public/icons` je nezměněná kopie ikon design systému (© Digitální a informační agentura); podrobnosti jsou v souboru [NOTICE](NOTICE).
 
 ## Odkazy
 
