@@ -21,6 +21,9 @@ defineProps<{
   showSuccess?: boolean
 }>()
 
+// the label points at the input by this id; without it assistive technology reads an unnamed field
+const fieldId = useId()
+
 const emit = defineEmits<{
   'update:modelValue': [value: string]
   blur: []
@@ -37,10 +40,11 @@ function handleBlur() {
 
 <template>
   <GovFormControl :invalid="showError" :success="showSuccess">
-    <GovFormLabel slot="top" :required="required">
+    <GovFormLabel slot="top" :identifier="fieldId" :required="required">
       {{ label }}
     </GovFormLabel>
     <GovFormInput
+      :identifier="fieldId"
       :model-value="modelValue"
       :placeholder="placeholder"
       :multiline="multiline"

@@ -1,3 +1,4 @@
+import { defineNitroPlugin } from 'nitropack/runtime'
 import { renderToString } from '@gov-design-system-ce/components/dist/hydrate/index.mjs'
 
 export default defineNitroPlugin((nitroApp) => {

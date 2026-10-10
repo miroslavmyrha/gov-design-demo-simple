@@ -16,6 +16,8 @@ defineProps<{
   error?: string
 }>()
 
+const fieldId = useId()
+
 const emit = defineEmits<{
   'update:modelValue': [value: string]
   blur: []
@@ -24,10 +26,10 @@ const emit = defineEmits<{
 
 <template>
   <GovFormControl :invalid="showError">
-    <GovFormLabel slot="top" :required="required">
+    <GovFormLabel slot="top" :identifier="fieldId" :required="required">
       {{ label }}
     </GovFormLabel>
-    <GovFormSelect :model-value="modelValue" :invalid="showError" @update:model-value="emit('update:modelValue', $event)" @gov-blur="emit('blur')">
+    <GovFormSelect :identifier="fieldId" :model-value="modelValue" :invalid="showError" @update:model-value="emit('update:modelValue', $event)" @gov-blur="emit('blur')">
       <option v-if="placeholder" value="">{{ placeholder }}</option>
       <option v-for="opt in options" :key="opt.value" :value="opt.value">
         {{ opt.label }}

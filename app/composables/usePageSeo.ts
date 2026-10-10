@@ -1,6 +1,7 @@
 const OG_IMAGE_WIDTH = 1200
 const OG_IMAGE_HEIGHT = 630
-const DEFAULT_OG_IMAGE = '/og-image.svg'
+// PNG: social networks do not show SVG previews
+const DEFAULT_OG_IMAGE = '/og-image.png'
 const LOCALE_MAP: Record<string, string> = { cs: 'cs_CZ', en: 'en_US' }
 
 interface PageSeoOptions {
@@ -13,7 +14,9 @@ export function usePageSeo(seoKey: string, options: PageSeoOptions = {}) {
   const route = useRoute()
   const config = useRuntimeConfig()
 
-  const baseUrl = config.public.siteUrl || ''
+  // canonical and Open Graph addresses must be absolute: without a configured site URL
+  // the address the page was requested on is used
+  const baseUrl = (config.public.siteUrl || useRequestURL().origin).replace(/\/$/, '')
   const ogImage = options.ogImage || DEFAULT_OG_IMAGE
   const ogType = options.ogType || 'website'
 
