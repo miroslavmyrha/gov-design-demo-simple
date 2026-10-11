@@ -26,7 +26,7 @@ const emit = defineEmits<{
 
 <template>
   <GovFormControl :invalid="showError">
-    <GovFormLabel slot="top" :identifier="fieldId" :required="required" data-allow-mismatch="attribute">
+    <GovFormLabel slot="top" :identifier="fieldId" :required="required">
       {{ label }}
     </GovFormLabel>
     <GovFormSelect :identifier="fieldId" :required="required" :model-value="modelValue" :invalid="showError" @update:model-value="emit('update:modelValue', $event)" @gov-blur="emit('blur')">
@@ -35,8 +35,12 @@ const emit = defineEmits<{
         {{ opt.label }}
       </option>
     </GovFormSelect>
+    <!--
+      Shown and hidden, never added or removed: the design system's component moves its children
+      into its own markup, and Vue cannot insert a node next to a placeholder that has moved.
+    -->
     <GovFormMessage
-      v-if="showError && error"
+      v-show="showError && error"
       slot="bottom"
       color="error"
     >

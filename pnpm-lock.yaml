@@ -20,17 +20,17 @@ importers:
         specifier: ^4.7.1
         version: 4.7.1
       '@gov-design-system-ce/fonts':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^4.7.1
+        version: 4.7.1
       '@gov-design-system-ce/icons':
-        specifier: ^0.2.3
-        version: 0.2.3
+        specifier: ^4.7.1
+        version: 4.7.1
       '@gov-design-system-ce/styles':
         specifier: ^4.7.1
         version: 4.7.1
       '@gov-design-system-ce/vue':
-        specifier: ^2.3.4
-        version: 2.3.4(vue-router@4.6.4(vue@3.5.43(typescript@6.0.3)))(vue@3.5.43(typescript@6.0.3))
+        specifier: ^4.7.1
+        version: 4.7.1(vue-router@4.6.4(vue@3.5.43(typescript@6.0.3)))(vue@3.5.43(typescript@6.0.3))
       '@nuxtjs/i18n':
         specifier: ^10.6.0
         version: 10.6.0(@nuxt/schema@4.6.1)(@vue/compiler-dom@3.5.43)(db0@0.3.4)(dotenv@17.4.2)(esbuild@0.28.2)(eslint@10.12.0(jiti@2.7.0))(giget@3.3.1)(ioredis@5.11.1)(jiti@2.7.0)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.43(typescript@6.0.3)))(rolldown@1.2.13)(rollup@4.64.5)(typescript@6.0.3)(vite@8.3.4(@types/node@25.9.9)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.43(typescript@6.0.3))
@@ -672,20 +672,11 @@ packages:
     resolution: {integrity: sha512-IkO+/KEUvwbVpiURZg+P7zF74z5Jxe0UgJxVni+RtoHQ6IZieXaO02kmadomap/q+l6bc/jdPGGqTjhuZnuz1Q==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  '@gov-design-system-ce/components@4.2.9':
-    resolution: {integrity: sha512-Bl5NMJHeq38m8tRnGCee4BftxpOszGuldNF2qapfk56RHeLsOVR5rO7V6/U2u3Rr7toMaAhbuy3t3h8ZE19t/A==}
-
   '@gov-design-system-ce/components@4.7.1':
     resolution: {integrity: sha512-Yq3ygNvvDyVWXHPjpctq4ASFv9ONQDTWKuL3QgQ1nJuaPQU5AEpanKu0VKuK2bjhRX5KOp/3Ya/iq1s9VuAllQ==}
 
-  '@gov-design-system-ce/fonts@0.0.2':
-    resolution: {integrity: sha512-wLl269rm6XQDdNBOSafhaiEHcuqLMs9L9u1iF9N+RzhYhGmnRBRVZ047AHLaLVyrlt4Eq2b+nrU77G+TYZzHtw==}
-
   '@gov-design-system-ce/fonts@4.7.1':
     resolution: {integrity: sha512-W1ukhcWxl/FOl2fu8uW6lTCjFxotaAbIlYgZMBenpgH2b2kYMNUH/0L+CSGkvQUSB4xfFIc4bDdDtl7HUbKvaA==}
-
-  '@gov-design-system-ce/icons@0.2.3':
-    resolution: {integrity: sha512-AzY1iUnXG9XqRyNx9DQRBpxsIrGpy4K4Efss9VD2IByatOtx6XyMbeFJPfIlW8ciJGX0IS5jHrd+sgfHo4jctA==}
 
   '@gov-design-system-ce/icons@4.7.1':
     resolution: {integrity: sha512-/nNLGwBl8I2bWp7uc8UPnUTquh1P5ZAH6IIRhomhVWEo5EhdIf6GZug/SKx5Nb9cFjtkiJzzB9GfXFyPordPBg==}
@@ -693,8 +684,10 @@ packages:
   '@gov-design-system-ce/styles@4.7.1':
     resolution: {integrity: sha512-0rxih1ShR8xfa7gdVzz6pvOcmsRhK1eNKRTyp5g2Lt6F11l17fycblp+ZJa4OBv1rUUBCXDBo4FzNMMyXD95BA==}
 
-  '@gov-design-system-ce/vue@2.3.4':
-    resolution: {integrity: sha512-04U6zNvkGlFpB8cWfKTyh85c+vlasI1WJHloNO46DbevhLMKDkSwG6m+t7ST7AmWjjOm/2fRdzDcZ0J8hOYa1A==}
+  '@gov-design-system-ce/vue@4.7.1':
+    resolution: {integrity: sha512-Mt6WDZwA4Uo001oSM7GEz/aFbUaRvBeZxQjE3usFTx8s4rCBCssyQdB8/vyE/ekmVFS6NIXwrMEchTFXXdDtpA==}
+    peerDependencies:
+      vue: ^3.4.0
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -5714,35 +5707,25 @@ snapshots:
       '@eslint/core': 1.2.1
       levn: 0.4.1
 
-  '@gov-design-system-ce/components@4.2.9':
-    dependencies:
-      '@gov-design-system-ce/fonts': 0.0.2
-      '@gov-design-system-ce/icons': 0.2.3
-      '@gov-design-system-ce/styles': 4.7.1
-
   '@gov-design-system-ce/components@4.7.1':
     dependencies:
       '@gov-design-system-ce/fonts': 4.7.1
       '@gov-design-system-ce/icons': 4.7.1
       '@gov-design-system-ce/styles': 4.7.1
 
-  '@gov-design-system-ce/fonts@0.0.2': {}
-
   '@gov-design-system-ce/fonts@4.7.1': {}
-
-  '@gov-design-system-ce/icons@0.2.3': {}
 
   '@gov-design-system-ce/icons@4.7.1': {}
 
   '@gov-design-system-ce/styles@4.7.1': {}
 
-  '@gov-design-system-ce/vue@2.3.4(vue-router@4.6.4(vue@3.5.43(typescript@6.0.3)))(vue@3.5.43(typescript@6.0.3))':
+  '@gov-design-system-ce/vue@4.7.1(vue-router@4.6.4(vue@3.5.43(typescript@6.0.3)))(vue@3.5.43(typescript@6.0.3))':
     dependencies:
-      '@gov-design-system-ce/components': 4.2.9
+      '@gov-design-system-ce/components': 4.7.1
       '@stencil/vue-output-target': 0.10.8(vue-router@4.6.4(vue@3.5.43(typescript@6.0.3)))(vue@3.5.43(typescript@6.0.3))
+      vue: 3.5.43(typescript@6.0.3)
     transitivePeerDependencies:
       - '@stencil/core'
-      - vue
       - vue-router
 
   '@humanfs/core@0.19.2':

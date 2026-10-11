@@ -2,7 +2,7 @@
 
 Demo integrace [Gov Design System CE](https://designsystem.gov.cz) s Nuxt 4. Není to oficiální projekt státní správy, jen ukázka, jak design systém napojit.
 
-Co v ní je: čtyři stránky česky a anglicky, formulář s validací (Zod) a souhrnem chyb, světlý a tmavý motiv včetně volby podle systému, bezpečnostní hlavičky (`nuxt-security`) a vykreslení komponent už na serveru.
+Co v ní je: čtyři stránky česky a anglicky, formulář s validací (Zod) a souhrnem chyb, světlý a tmavý motiv včetně volby podle systému, a bezpečnostní hlavičky (`nuxt-security`).
 
 ![Screenshot - Úvodní stránka](docs/screenshot-home.png)
 
@@ -47,39 +47,32 @@ export default defineNuxtConfig({
 
 ### 3. Pluginy
 
-Client plugin - registrace komponent:
+Client plugin registruje komponenty až po hydrataci (celý je v `app/plugins/design-system.client.ts`):
 ```typescript
-// app/plugins/design-system.client.ts
-import { ComponentLibrary } from '@gov-design-system-ce/vue/dist/plugin'
+import { ComponentLibrary } from '@gov-design-system-ce/vue/plugin'
 
-export default defineNuxtPlugin(({ vueApp }) => {
+export default defineNuxtPlugin((nuxtApp) => {
   window.GOV_DS_CONFIG = {
     iconsPath: '/icons',
     iconsLazyLoad: true,
   }
-  vueApp.use(ComponentLibrary)
-})
-```
 
-Server plugin - SSR hydratace:
-```typescript
-// server/plugins/design-system.ts
-import { defineNitroPlugin } from 'nitropack/runtime'
-import { renderToString } from '@gov-design-system-ce/components/dist/hydrate/index.mjs'
-
-export default defineNitroPlugin((nitroApp) => {
-  nitroApp.hooks.hook('render:response', async (response) => {
-    if (!response.body || typeof response.body !== 'string') return
-
-    try {
-      const result = await renderToString(response.body)
-      response.body = result.html
-    } catch (error) {
-      // Fallback na client-side rendering
-    }
+  nuxtApp.hook('app:suspense:resolve', async () => {
+    await ComponentLibrary.install?.(nuxtApp.vueApp)
+    passOnEarlyAttributes()
   })
 })
 ```
+
+### Jak spolu žijí Vue a komponenty design systému
+
+Komponenty jsou web components **bez shadow DOM**. Jakmile se vykreslí, přesunou si své potomky do vlastního HTML. Vue o tom neví a s tím souvisí tři pravidla, na kterých demo stojí:
+
+1. **Komponenty se registrují až po hydrataci.** Kdyby si potomky přeskládaly dřív, než Vue převezme stránku ze serveru, Vue by našlo jiný strom, než čeká, komponenty zahodilo a postavilo znovu (v konzoli „Hydration completed but contains mismatches“).
+2. **Komponenty se nevykreslují na serveru.** Balíček `@gov-design-system-ce/components` k tomu má skript (`dist/hydrate`), ale jeho výstup Vue při hydrataci nepozná a přestaví ho. Oficiální podpora SSR ve Stencilu pro Vue počítá s Declarative Shadow DOM, který tyhle komponenty nepoužívají. Server tedy pošle obsah (texty, popisky, nadpisy) a vzhled komponent doplní prohlížeč. Aby stránka při tom neposkakovala, drží `app/styles/main.css` formulářovým polím a položkám akordeonu místo, dokud se nevykreslí (`:not(.hydrated)`).
+3. **Přímo uvnitř komponenty nic nepřidávejte ani neodebírejte.** `v-if` na přímém potomkovi `GovFormControl` po první změně shodí celý formulář: Vue si drží značku, kam prvek vloží, a komponenta ji mezitím přesunula. Použijte `v-show`, nebo podmínku dejte do obalovacího prvku. Seznamy (`v-for`), které se po načtení nemění, nevadí.
+
+Vlastnosti, které Vue nastaví ještě neregistrované komponentě, skončí jako atributy se špatným názvem (`nativeType` jako `nativetype`, komponenta čte `native-type`). Funkce `passOnEarlyAttributes()` v pluginu je po registraci předá pod správným názvem; bez ní by třeba odesílací tlačítko zůstalo obyčejným tlačítkem.
 
 ### 4. Použití komponent
 
@@ -124,6 +117,7 @@ Popisek a pole spojuje stejný `identifier`. Bez něj se popisek jen zobrazí ve
 - Textarea: `<GovFormInput :multiline="true" :rows="4" />`
 - CSP: vyžaduje `style-src 'unsafe-inline'` (Stencil.js generuje inline styly)
 - CSP: `script-src` musí povolit inline skript Nuxtu, nejlépe přes nonce (`'nonce-{{nonce}}' 'strict-dynamic'` v `nuxt-security`). Se samotným `'self'` se stránka vykreslí, ale v prohlížeči neoživí, a ve vývojovém režimu se to neprojeví
+- `nuxt-security` v produkci odstraňuje výpisy do konzole (`removeLoggers`), pokud to použitý minifikátor umí. Chyby hydratace pak nejsou vidět; při ladění si je zapněte přes `vite.define.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__`
 - Znak `|` v překladech odděluje tvary množného čísla. Jako obyčejný znak (třeba v titulku stránky) se píše `{'|'}`
 - Čeština má tři tvary množného čísla; pravidlo je v `i18n/i18n.config.ts`
 
@@ -159,7 +153,6 @@ app/composables  validace formuláře, přístupnost, SEO
 app/schemas      schéma formuláře (Zod)
 app/stores       motiv a oznámení (Pinia)
 i18n/locales     překlady cs a en
-server/plugins   vykreslení komponent design systému na serveru
 tests            unit testy
 ```
 

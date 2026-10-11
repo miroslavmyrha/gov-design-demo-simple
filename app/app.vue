@@ -10,6 +10,13 @@ useHead(() => ({
     lang: localeHead.value.htmlAttrs?.lang,
     'data-theme': themeStore.effectiveTheme,
   },
+  noscript: [
+    {
+      // Without JavaScript the components never render: show the content the reserved space would hide
+      key: 'no-script-components',
+      innerHTML: '<style>gov-accordion-item:not(.hydrated){height:auto;overflow:visible}</style>',
+    },
+  ],
   script: [
     {
       // Runs before the first paint, so that a dark theme does not flash light while the page loads.

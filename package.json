@@ -21,10 +21,10 @@
   },
   "dependencies": {
     "@gov-design-system-ce/components": "^4.7.1",
-    "@gov-design-system-ce/fonts": "^0.0.2",
-    "@gov-design-system-ce/icons": "^0.2.3",
+    "@gov-design-system-ce/fonts": "^4.7.1",
+    "@gov-design-system-ce/icons": "^4.7.1",
     "@gov-design-system-ce/styles": "^4.7.1",
-    "@gov-design-system-ce/vue": "^2.3.4",
+    "@gov-design-system-ce/vue": "^4.7.1",
     "@nuxtjs/i18n": "^10.6.0",
     "@pinia/nuxt": "^0.11.3",
     "nuxt": "^4.6.1",
