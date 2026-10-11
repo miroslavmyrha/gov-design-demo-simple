@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "private": true,
+  "license": "EUPL-1.2",
   "packageManager": "pnpm@10.28.0",
   "engines": {
     "node": ">=20.0.0"
@@ -14,28 +15,37 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "typecheck": "vue-tsc --noEmit",
-    "clean": "rm -rf .nuxt .output node_modules/.cache"
+    "clean": "rm -rf .nuxt .output node_modules/.cache",
+    "lint": "eslint .",
+    "test": "vitest run"
   },
   "dependencies": {
-    "@gov-design-system-ce/components": "^4.2.9",
-    "@gov-design-system-ce/fonts": "^0.0.2",
-    "@gov-design-system-ce/icons": "^0.2.3",
-    "@gov-design-system-ce/styles": "^4.2.7",
-    "@gov-design-system-ce/vue": "^2.3.4",
-    "@nuxtjs/i18n": "^10.2.3",
+    "@gov-design-system-ce/components": "^4.7.1",
+    "@gov-design-system-ce/fonts": "^4.7.1",
+    "@gov-design-system-ce/icons": "^4.7.1",
+    "@gov-design-system-ce/styles": "^4.7.1",
+    "@gov-design-system-ce/vue": "^4.7.1",
+    "@nuxtjs/i18n": "^10.6.0",
     "@pinia/nuxt": "^0.11.3",
-    "nuxt": "^4.2.2",
-    "nuxt-security": "^2.5.1",
+    "nuxt": "^4.6.1",
+    "nuxt-security": "^2.6.0",
     "pinia": "^3.0.4",
-    "vue": "^3.5.28",
+    "vue": "^3.5.43",
     "vue-router": "^4.6.4",
-    "zod": "^4.3.6"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@types/node": "^25.3.0",
+    "@nuxt/eslint": "^1.17.0",
+    "@nuxt/test-utils": "^4.3.3",
+    "@types/node": "^25.9.9",
+    "@vue/test-utils": "^2.5.1",
+    "eslint": "^10.12.0",
+    "happy-dom": "^20.14.6",
     "schema-dts": "^1.1.5",
+    "typescript": "^6.0.3",
     "vite-plugin-checker": "^0.12.0",
-    "vue-tsc": "^3.2.4"
+    "vitest": "^5.0.3",
+    "vue-tsc": "^3.3.13"
   },
   "pnpm": {
     "overrides": {
@@ -43,7 +53,16 @@
       "@isaacs/brace-expansion": ">=5.0.1",
       "devalue": ">=5.6.3",
       "minimatch": ">=10.2.1",
-      "ajv": ">=8.18.0"
+      "ajv@>=8.0.0 <8.18.0": ">=8.18.0",
+      "typescript": "^6.0.3"
+    },
+    "auditConfig": {
+      "ignoreGhsas": [
+        "GHSA-v5rq-49vh-5v5c",
+        "GHSA-x6jw-m9v5-85vh",
+        "GHSA-g4wm-2vf7-vfgr",
+        "GHSA-858h-whjf-mvg5"
+      ]
     }
   }
 }

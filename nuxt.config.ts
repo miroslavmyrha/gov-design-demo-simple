@@ -38,6 +38,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/i18n',
     'nuxt-security',
+    '@nuxt/eslint',
   ],
 
   security: {
@@ -58,9 +59,12 @@ export default defineNuxtConfig({
       },
       contentSecurityPolicy: {
         'default-src': ['\'self\''],
+        // Nuxt hands its state to the browser in an inline script. In production that script
+        // gets a nonce (filled in for every response); 'strict-dynamic' lets it load the chunks.
+        // With plain 'self' the page was rendered but never came to life.
         'script-src': process.env.NODE_ENV === 'development'
           ? ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\'']
-          : ['\'self\''],
+          : ['\'self\'', '\'nonce-{{nonce}}\'', '\'strict-dynamic\''],
         'base-uri': ['\'self\''],
         'font-src': ['\'self\'', 'data:'],
         'form-action': ['\'self\''],
@@ -95,6 +99,7 @@ export default defineNuxtConfig({
     defaultLocale: 'cs',
     strategy: 'prefix_except_default',
     langDir: 'locales',
+    vueI18n: './i18n.config.ts',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_locale',

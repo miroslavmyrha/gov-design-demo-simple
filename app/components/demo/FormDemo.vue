@@ -17,6 +17,7 @@ const { announce } = useAccessibility()
 const { t } = useI18n()
 
 const formKey = ref(0)
+const errorSummaryRef = ref<{ focus: () => void } | null>(null)
 
 const localizedSchema = computed(() => createFormSchema(t))
 const localizedFieldLabels = computed(() => createFieldLabels(t))
@@ -43,7 +44,6 @@ const {
   shouldShowError,
   getError,
   markTouched,
-  isFormValid,
   errorSummary,
   reset,
   submitted,
@@ -63,8 +63,10 @@ function handleSubmit(): void {
     announce(t('form.successMessage'), 'polite')
     resetForm()
   } else {
-    const errorCount = result.error.issues.length
+    const errorCount = errorSummary.value.length
     announce(t('form.errorCount', { count: errorCount }, errorCount), 'assertive')
+    // the summary appears above the form: take the user there
+    nextTick(() => errorSummaryRef.value?.focus())
   }
 }
 
@@ -80,9 +82,9 @@ function resetForm(): void {
 
 <template>
   <DemoSection title-key="form.title">
-    <FormErrorSummary v-if="submitted" :errors="errorSummary" />
+    <FormErrorSummary v-if="submitted" ref="errorSummaryRef" :errors="errorSummary" />
 
-    <form :key="formKey" @submit.prevent="handleSubmit">
+    <form :key="formKey" novalidate @submit.prevent="handleSubmit">
       <FormField
         v-for="field in textFields"
         :key="field.key"
@@ -102,10 +104,10 @@ function resetForm(): void {
 
       <FormSelectField
         :model-value="formData.option ?? ''"
-        @update:model-value="(v: string) => formData.option = v"
         :label="$t('form.fields.option.label')"
         :placeholder="$t('form.fields.option.placeholder')"
         :options="selectOptions"
+        @update:model-value="(v: string) => formData.option = v"
       />
 
       <FormRadioField
@@ -133,7 +135,6 @@ function resetForm(): void {
           size="m"
           type="solid"
           native-type="submit"
-          :disabled="!isFormValid"
         >
           {{ $t('common.submit') }}
         </GovButton>

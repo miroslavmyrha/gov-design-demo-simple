@@ -12,7 +12,7 @@ export function useStructuredData() {
   const config = useRuntimeConfig()
   const route = useRoute()
 
-  const baseUrl = config.public.siteUrl || ''
+  const baseUrl = (config.public.siteUrl || useRequestURL().origin).replace(/\/$/, '')
 
   /**
    * Add JSON-LD script to the page head

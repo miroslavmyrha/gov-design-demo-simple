@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { GovButton, GovIcon } from '@gov-design-system-ce/vue'
+import { GovIcon } from '@gov-design-system-ce/vue'
 import { ORG_NAME } from '~/data/app'
 
 const { t, locale, locales } = useI18n()
@@ -61,7 +61,7 @@ watch(() => currentRoute.path, () => {
     <div class="gov-container">
       <div class="header-content">
         <div class="header-logo">
-          <NuxtLink to="/" class="logo-link">
+          <NuxtLink :to="localePath('/')" class="logo-link">
             <span class="logo-text">{{ ORG_NAME }}</span>
           </NuxtLink>
         </div>
@@ -98,7 +98,7 @@ watch(() => currentRoute.path, () => {
             class="mobile-menu-toggle"
             :aria-expanded="mobileMenuOpen"
             aria-controls="mobile-nav"
-            :aria-label="$t('nav.openMenu')"
+            :aria-label="mobileMenuOpen ? $t('nav.closeMenu') : $t('nav.openMenu')"
             @click="toggleMobileMenu"
           >
             <GovIcon :name="mobileMenuOpen ? 'x-lg' : 'list'" />

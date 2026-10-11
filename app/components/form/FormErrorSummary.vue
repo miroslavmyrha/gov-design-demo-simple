@@ -6,17 +6,26 @@ defineProps<{
   errors: FieldError[]
   title?: string
 }>()
+
+const root = ref<HTMLElement | null>(null)
+
+defineExpose({
+  /** Moves the focus to the summary, so that keyboard and screen reader users land on the errors */
+  focus: () => root.value?.focus(),
+})
 </script>
 
 <template>
-  <GovMessage v-if="errors.length > 0" color="error" class="form-error-summary">
+  <div v-if="errors.length > 0" ref="root" role="alert" tabindex="-1" class="form-error-summary">
+    <GovMessage color="error">
     <strong>{{ title || $t('form.errorsTitle') }}</strong>
     <ul>
       <li v-for="error in errors" :key="error.field">
         <strong>{{ error.label }}:</strong> {{ error.message }}
       </li>
     </ul>
-  </GovMessage>
+    </GovMessage>
+  </div>
 </template>
 
 <style scoped>

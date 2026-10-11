@@ -7,6 +7,6 @@ defineProps<{
 <template>
   <section class="demo-section">
     <h2 class="gov-text--xl">{{ $t(titleKey) }}</h2>
-    <slot></slot>
+    <slot/>
   </section>
 </template>

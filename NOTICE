@@ -1,0 +1,16 @@
+Gov Design System CE + Nuxt 4 demo
+Copyright (c) 2026 Miroslav Myrha
+
+Licensed under the European Union Public Licence v. 1.2 (EUPL-1.2). The text of the licence is in
+the file LICENCE; other language versions: https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+
+This repository contains a copy of third-party work:
+
+  public/icons
+    Icons of Gov Design System CE, copied unmodified from the package @gov-design-system-ce/icons.
+    Copyright (c) 2020-2024 Digitální a informační agentura
+    Licensed under EUPL-1.2.
+
+The Gov Design System CE packages the application depends on (@gov-design-system-ce/components,
+styles, fonts, icons, vue) are installed from npm, are not part of this repository and are licensed
+under EUPL-1.2 by Digitální a informační agentura.

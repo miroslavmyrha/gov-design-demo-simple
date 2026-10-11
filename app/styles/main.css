@@ -19,3 +19,33 @@
   white-space: nowrap;
   border: 0;
 }
+
+/*
+ * Form fields before the design system's components have rendered. The components are defined
+ * after hydration (see app/plugins/design-system.client.ts) and load their code on demand; until
+ * then a field is an empty element and the form would be short at first and jump when the fields
+ * appear. A rendered component carries the class "hydrated". The heights are the ones the fields
+ * have once rendered (size "m").
+ */
+gov-form-input:not(.hydrated),
+gov-form-select:not(.hydrated),
+gov-form-radio:not(.hydrated),
+gov-form-checkbox:not(.hydrated) {
+  display: block;
+  min-height: 2.5rem;
+}
+
+gov-form-input:not(.hydrated) {
+  min-height: 2.625rem;
+}
+
+gov-form-input[multiline]:not(.hydrated) {
+  min-height: 7.125rem;
+}
+
+/* A closed accordion item shows its heading only; before it has rendered its content would show too */
+gov-accordion-item:not(.hydrated) {
+  display: block;
+  height: 3.5rem;
+  overflow: hidden;
+}

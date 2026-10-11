@@ -6,6 +6,7 @@ export default {
     about: 'About',
     skipToContent: 'Skip to main content',
     openMenu: 'Open menu',
+    closeMenu: 'Close menu',
     mainNavigation: 'Main navigation',
     mobileNavigation: 'Mobile navigation',
     footerNavigation: 'Footer links',
@@ -16,6 +17,8 @@ export default {
     switchToLight: 'Switch to light mode',
     light: 'Light mode',
     dark: 'Dark mode',
+    system: 'System theme',
+    switchToSystem: 'Switch to the system theme',
   },
 
   language: {
@@ -298,6 +301,7 @@ export default {
     card: {
       title: 'Cards',
       actionButton: 'Action',
+      actionDone: 'The card action was performed.',
       basic: {
         title: 'Basic card',
         content: 'Simple card with title and content.',
@@ -329,15 +333,15 @@ export default {
       description: 'Interactive demonstration of Gov Design System CE components with Nuxt 4, Vue 3 reactivity and Zod form validation.',
     },
     components: {
-      title: 'Components | Gov Design System Demo',
+      title: "Components {'|'} Gov Design System Demo",
       description: 'Overview of all available components from Gov Design System CE - buttons, cards, messages, chips and more.',
     },
     forms: {
-      title: 'Forms | Gov Design System Demo',
+      title: "Forms {'|'} Gov Design System Demo",
       description: 'Demonstration of form components with Zod validation and Czech error messages.',
     },
     about: {
-      title: 'About | Gov Design System Demo',
+      title: "About {'|'} Gov Design System Demo",
       description: 'Information about the Gov Design System CE demo project with Nuxt 4, Vue 3 and TypeScript.',
     },
   },

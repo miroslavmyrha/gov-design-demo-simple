@@ -15,7 +15,7 @@ const { isKeyboardUser, handleSkipLink } = useAccessibility()
     <LayoutAppHeader />
 
     <main id="main-content" class="main-content" tabindex="-1">
-      <slot></slot>
+      <slot/>
     </main>
 
     <LayoutAppFooter />

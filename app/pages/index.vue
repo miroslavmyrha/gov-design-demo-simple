@@ -10,7 +10,7 @@ usePageSeo('home')
 const { addStructuredData, createWebSite, createOrganization } = useStructuredData()
 addStructuredData([
   createWebSite({ name: APP_NAME, description: t('home.subtitle') }),
-  createOrganization({ name: ORG_NAME, logo: '/og-image.svg' }),
+  createOrganization({ name: ORG_NAME, logo: '/og-image.png' }),
 ])
 
 const localePath = useLocalePath()

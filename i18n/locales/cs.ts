@@ -6,6 +6,7 @@ export default {
     about: 'O projektu',
     skipToContent: 'Přeskočit na hlavní obsah',
     openMenu: 'Otevřít menu',
+    closeMenu: 'Zavřít menu',
     mainNavigation: 'Hlavní navigace',
     mobileNavigation: 'Mobilní navigace',
     footerNavigation: 'Odkazy v patičce',
@@ -16,6 +17,8 @@ export default {
     switchToLight: 'Přepnout na světlý režim',
     light: 'Světlý mód',
     dark: 'Tmavý mód',
+    system: 'Podle systému',
+    switchToSystem: 'Přepnout na režim podle systému',
   },
 
   language: {
@@ -298,6 +301,7 @@ export default {
     card: {
       title: 'Karty',
       actionButton: 'Akce',
+      actionDone: 'Akce z karty byla provedena.',
       basic: {
         title: 'Základní karta',
         content: 'Jednoduchá karta s nadpisem a obsahem.',
@@ -329,15 +333,15 @@ export default {
       description: 'Interaktivní ukázka Gov Design System CE komponent s Nuxt 4, Vue 3 reaktivitou a Zod validací formulářů.',
     },
     components: {
-      title: 'Komponenty | Gov Design System Demo',
+      title: "Komponenty {'|'} Gov Design System Demo",
       description: 'Přehled všech dostupných komponent z Gov Design System CE - tlačítka, karty, zprávy, chipy a další.',
     },
     forms: {
-      title: 'Formuláře | Gov Design System Demo',
+      title: "Formuláře {'|'} Gov Design System Demo",
       description: 'Ukázka formulářových komponent s Zod validací a českými chybovými hláškami.',
     },
     about: {
-      title: 'O projektu | Gov Design System Demo',
+      title: "O projektu {'|'} Gov Design System Demo",
       description: 'Informace o demo projektu Gov Design System CE s Nuxt 4, Vue 3 a TypeScript.',
     },
   },
