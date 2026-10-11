@@ -301,6 +301,7 @@ export default {
     card: {
       title: 'Cards',
       actionButton: 'Action',
+      actionDone: 'The card action was performed.',
       basic: {
         title: 'Basic card',
         content: 'Simple card with title and content.',

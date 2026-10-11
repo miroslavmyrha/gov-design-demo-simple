@@ -301,6 +301,7 @@ export default {
     card: {
       title: 'Karty',
       actionButton: 'Akce',
+      actionDone: 'Akce z karty byla provedena.',
       basic: {
         title: 'Základní karta',
         content: 'Jednoduchá karta s nadpisem a obsahem.',
