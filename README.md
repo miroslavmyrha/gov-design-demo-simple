@@ -160,6 +160,10 @@ tests            unit testy
 
 Kód dema je pod [EUPL 1.2](LICENCE), stejně jako Gov Design System CE. Složka `public/icons` je nezměněná kopie ikon design systému (© Digitální a informační agentura); podrobnosti jsou v souboru [NOTICE](NOTICE).
 
+## Nejmenší možný základ
+
+Ve složce [`starters/nuxt`](starters/nuxt) je startér s jednou stránkou a čtyřmi komponentami, postavený podle oficiálního startéru pro Vue. Ukazuje jen to, co Nuxt potřebuje navíc: registraci komponent až po hydrataci. Změřeno na produkčním sestavení: 0 chyb hydratace místo 8.
+
 ## Odkazy
 
 - [Gov Design System](https://designsystem.gov.cz)

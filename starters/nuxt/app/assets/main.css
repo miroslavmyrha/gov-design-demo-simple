@@ -1,0 +1,14 @@
+/*
+ * Until a component is registered it has no size of its own, so the page would jump when
+ * it appears. Stencil marks a rendered component with the class "hydrated"; before that
+ * the space is reserved here. Add a rule for every component whose height you rely on.
+ */
+gov-form-input:not(.hydrated) {
+  display: block;
+  min-height: 2.625rem;
+}
+
+gov-button:not(.hydrated) {
+  display: inline-block;
+  min-height: 2.5rem;
+}
